@@ -1,8 +1,6 @@
 #include "Praca.h"
 #include "UI_messages.h"
 
-// #include "additionalFunctions.h"
-
 #include <vector>
 #include <string>
 #include <iostream>
@@ -307,12 +305,3 @@ void Praca::printPraca(int id) {
  int Praca::returnIdPracy() {
      return Praca::idPraca;
  }
-
-
-
-
-
-
-
-
-
