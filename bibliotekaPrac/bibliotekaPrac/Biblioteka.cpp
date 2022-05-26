@@ -1,6 +1,7 @@
 #include "Biblioteka.h"
 #include "additionalFunctions.h"
 #include "Praca.h"
+#include "UI_messages.h"
 
 #include <string>
 #include <iostream>

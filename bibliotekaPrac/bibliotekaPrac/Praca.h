@@ -15,9 +15,7 @@ extern const int MINIMALNY_ROK;
 extern const int ILE_WARTOSCI_PRACA;
 extern const std::vector<std::string> dozwoloneTypy;
 
-
 class ID;
-
 
 class Praca {
 
@@ -47,7 +45,7 @@ public:
         std::cout << "Praca constructor called" << std::endl;        
     }
 
-    // Funkcje dodajace poszczegolne pola pracy
+    // Main Praca class member functions
 
         // Funkcja przypisujaca id
         void dodajIdPracy(int lastID);
@@ -82,7 +80,7 @@ public:
         // Funkcja przypisujaca streszczenie
         void addStreszczenie();
 
-    // Inne funkcje
+    // Misc functions
 
         void printPraca(int id);
 
@@ -91,6 +89,8 @@ public:
         int returnIdPracy();
 
         bool validateType(std::string, const std::vector<std::string>);
+
+        bool validateYear(int input);
 
         void clearCin();
 
