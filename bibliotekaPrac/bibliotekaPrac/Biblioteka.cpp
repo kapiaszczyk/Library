@@ -16,6 +16,7 @@
 
 bool cmp(std::pair<int, Praca> a, std::pair<int, Praca> b) {
     return a.first < b.first;
+    // test
 }
 
 int Biblioteka::getLastId(std::vector<std::pair<int, Praca>>& listaPrac) {
