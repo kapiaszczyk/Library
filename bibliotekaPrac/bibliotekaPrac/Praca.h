@@ -84,27 +84,15 @@ public:
 
     // Inne funkcje
 
-    void printPraca(int id);
+        void printPraca(int id);
 
-    std::string printSelected(int choice) {
+        std::string printSelected(int choice);
 
-        switch (choice) {
-        case (0):
-            return std::to_string(idPraca);
-            break;
-        default:
-            return "NaN";
-            break;
-        }
-    }
+        int returnIdPracy();
 
-    int returnIdPracy() {
-        return idPraca;
-    }
+        bool validateType(std::string, const std::vector<std::string>);
 
-    bool validateType(std::string, const std::vector<std::string>);
-
-    void clearCin();
+        void clearCin();
 
 };
 

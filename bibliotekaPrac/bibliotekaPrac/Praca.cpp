@@ -290,6 +290,24 @@ void Praca::printPraca(int id) {
      std::cin.ignore();
  }
 
+ // Funkcja drukujaca dane Pracy
+ std::string Praca::printSelected(int choice) {
+
+     switch (choice) {
+     case (0):
+         return std::to_string(Praca::idPraca);
+         break;
+     default:
+         return "NaN";
+         break;
+     }
+ }
+
+ // Funkcja przekazuje wartosc id Pracy
+ int Praca::returnIdPracy() {
+     return Praca::idPraca;
+ }
+
 
 
 
