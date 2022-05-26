@@ -11,6 +11,11 @@
 #include <limits>
 #include <boost/algorithm/string/case_conv.hpp>
 
+void Praca::clearCin() {
+    std::cin.clear();
+    std::cin.ignore();
+}
+
 // Funkcja przypisujaca id
 void Praca::dodajIdPracy(int lastID) {
     Praca::idPraca = lastID + 1;
@@ -20,7 +25,7 @@ void Praca::dodajIdPracy(int lastID) {
 std::string Praca::addTypPracy() {
 
     typPracyMessage(initial);
-    typPracyMessage(allowedValue);
+    typPracyMessage(allowedValues);
 
     std::string temp = "";
 
@@ -34,8 +39,8 @@ std::string Praca::addTypPracy() {
         if (!Praca::validateType(temp, dozwoloneTypy)) {
 
             typPracyMessage(error);
-            typPracyMessage(allowedValue);
-            clearCin();
+            typPracyMessage(allowedValues);
+            Praca::clearCin();
 
         }
 
@@ -59,12 +64,6 @@ void Praca::printPraca(int id) {
         << imionaPromotora << std::endl
         << slowaKluczowe << std::endl
         << streszczenie << std::endl;
-}
-
-
- void clearCin() {
-    std::cin.clear();
-    std::cin.ignore();
 }
 
 // Sprawdza, czy rok spe³nia wymagania
@@ -149,7 +148,7 @@ void Praca::printPraca(int id) {
 
             temp = "";
 
-            clearCin();
+            Praca::clearCin();
         }
 
 
@@ -172,7 +171,7 @@ void Praca::printPraca(int id) {
             std::cout << "Nazwisko promotora nie moze byc puste!" << std::endl;
             temp = "";
 
-            clearCin();
+            Praca::clearCin();
         }
 
     }
@@ -197,7 +196,7 @@ void Praca::printPraca(int id) {
             std::cout << "Minimalny rok to " << MINIMALNY_ROK << std::endl;
             temp = 0;
 
-            clearCin();
+            Praca::clearCin();
 
         }
 
@@ -221,7 +220,7 @@ void Praca::printPraca(int id) {
             std::cout << "Imiona autora nie moga byc puste!" << std::endl;
             temp = "";
 
-            clearCin();
+            Praca::clearCin();
         }
 
     }
@@ -246,7 +245,7 @@ void Praca::printPraca(int id) {
             std::cout << "Nazwisko autora nie moze byc puste!" << std::endl;
             temp = "";
 
-            clearCin();
+            Praca::clearCin();
         }
 
     }
@@ -270,7 +269,7 @@ void Praca::printPraca(int id) {
             std::cout << "Tytul pracy nie moze byc pusty!" << std::endl;
             temp = "";
 
-            clearCin();
+            Praca::clearCin();
         }
 
     }

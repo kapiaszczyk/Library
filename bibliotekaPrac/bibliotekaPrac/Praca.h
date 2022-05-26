@@ -39,7 +39,7 @@ private:
 public:
 
     enum messageFlag {
-        initial, error, allowedValue
+        initial, error, allowedValues
     };
 
     Praca() 
@@ -84,8 +84,6 @@ public:
 
     // Inne funkcje
 
-
-
     void printPraca(int id);
 
     std::string printSelected(int choice) {
@@ -106,7 +104,7 @@ public:
 
     bool validateType(std::string, const std::vector<std::string>);
 
-   
+    void clearCin();
 
 };
 
