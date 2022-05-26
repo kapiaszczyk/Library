@@ -45,7 +45,7 @@ public:
         std::cout << "Praca constructor called" << std::endl;        
     }
 
-    // Main Praca class member functions
+    // Main get functions
 
         // Funkcja przypisujaca id
         void dodajIdPracy(int lastID);
@@ -63,7 +63,7 @@ public:
         void addImionaAutora();
 
         // Funkcja generujaca inicjaly autora
-        void getInicjal(std::string, std::string& inicjalyAutora, const char);
+        void getInicjal(std::string, std::string&, const char);
 
         // Funkcja przypisujaca rok
         void addRok();
@@ -80,19 +80,58 @@ public:
         // Funkcja przypisujaca streszczenie
         void addStreszczenie();
 
+    // Main read functions
+
+        // Funkcja przekazujaca ID pracy
+        int readIdPracy();
+
+        // Funkcja przekazujaca typ pracy
+        std::string readTypPracy();
+
+        // Funkcja przekazujaca tytul pracy
+        std::string readTytul();
+
+        // Funkcja przekazujaca nazwisko autora
+        std::string readNazwiskoAutora();
+
+        // Funkcja przekazujaca imiona autora
+        std::string readImionaAutora();
+
+        // Funkcja przekazujaca inicjaly autora
+        std::string readInicjal();
+
+        // Funkcja przekazujaca rok
+        int readRok();
+
+        // Funkcja przekazujaca nazwisko promotora
+        std::string readNazwiskoPromotora();
+
+        // Funkcja przekazujaca imiona promotora
+        std::string readImionaPromotora();
+
+        // Funkcja przekazujaca slowa kluczowe
+        std::string readSlowaKluczowe();
+        
+        // Funkcja przekazujaca streszczenie kluczowe
+        std::string readStreszczenie();
+
+
     // Misc functions
 
+        // Wypisuje wszystkie dane pracy
         void printPraca(int id);
 
-        std::string printSelected(int choice);
-
-        int returnIdPracy();
-
-        bool validateType(std::string, const std::vector<std::string>);
-
+        // Sprawdza, czy rok spe³nia wymagania
         bool validateYear(int input);
 
+        // Sprawdza, czy typ pracy spelnia wymagania
+        bool validateType(std::string input, const std::vector<std::string>);
+
+        // Funkcja resetuje strumien wejscia
         void clearCin();
+
+        // Funkcja drukujaca dane Pracy
+        std::string printSelected(int choice);
 
 };
 
