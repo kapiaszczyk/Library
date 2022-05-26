@@ -1,4 +1,5 @@
 #include "Praca.h"
+#include "UI_messages.h"
 
 // #include "additionalFunctions.h"
 
@@ -10,14 +11,60 @@
 #include <limits>
 #include <boost/algorithm/string/case_conv.hpp>
 
+// Funkcja przypisujaca id
+void Praca::dodajIdPracy(int lastID) {
+    Praca::idPraca = lastID + 1;
+}
+
+// Funkcja przypisujaca typ pracy
+std::string Praca::addTypPracy() {
+
+    typPracyMessage(initial);
+    typPracyMessage(allowedValue);
+
+    std::string temp = "";
+
+    while (!Praca::validateType(temp, dozwoloneTypy)) {
+
+        std::cin >> temp;
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+
+        boost::algorithm::to_lower(temp);
+
+        if (!Praca::validateType(temp, dozwoloneTypy)) {
+
+            typPracyMessage(error);
+            typPracyMessage(allowedValue);
+            clearCin();
+
+        }
+
+    }
+
+    return temp;
+}
+
+
+
+// Wypisuje wszystkie dane obiektu Praca
+void Praca::printPraca(int id) {
+    std::cout
+        << idPraca << std::endl
+        << typPracy << std::endl
+        << tytul << std::endl
+        << nazwiskoAutora << std::endl
+        << imionaAutora << std::endl
+        << inicjalyAutora << std::endl
+        << rok << std::endl
+        << imionaPromotora << std::endl
+        << slowaKluczowe << std::endl
+        << streszczenie << std::endl;
+}
+
 
  void clearCin() {
     std::cin.clear();
     std::cin.ignore();
-}
-
- void Praca::printTypeList(const std::vector<std::string> dozwoloneTypy) {
-    for (unsigned int i = 0; i < dozwoloneTypy.size(); i++) std::cout << dozwoloneTypy[i] << std::endl;
 }
 
 // Sprawdza, czy rok spe³nia wymagania
@@ -232,28 +279,3 @@
     return temp;
 }
 
- std::string Praca::addTypPracy() {
-
-    std::cout << "Dodaj typ pracy" << std::endl;
-    std::string temp = "";
-
-    while (!Praca::validateType(temp, dozwoloneTypy)) {
-
-        std::cin >> temp;
-        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-
-        boost::algorithm::to_lower(temp);
-
-        if (!Praca::validateType(temp, dozwoloneTypy)) {
-
-            std::cout << "Nieozwolony typ pracy. Podaj jeden z nastepujacych typow pracy" <<std::endl;
-
-            Praca::printTypeList(dozwoloneTypy);
-            clearCin();
-
-        }
-
-    }
-
-    return temp;
-}

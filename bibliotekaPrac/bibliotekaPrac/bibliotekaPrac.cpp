@@ -25,12 +25,17 @@ const std::vector<std::string> dozwoloneTypy = { "mgr", "inz", "lic" };
 
 int main() {
 
-    Biblioteka biblioteka;
+    //Biblioteka biblioteka;
 
-    biblioteka.Biblioteka::wczytajPrace(biblioteka.Biblioteka::listaPrac);
-    biblioteka.Biblioteka::menu(biblioteka);
+    //biblioteka.Biblioteka::wczytajPrace(biblioteka.Biblioteka::listaPrac);
+    //biblioteka.Biblioteka::menu(biblioteka);
+
+    Praca newPraca;
+
+
 
     //Sleep(36000);
+
 
     return 0;
    

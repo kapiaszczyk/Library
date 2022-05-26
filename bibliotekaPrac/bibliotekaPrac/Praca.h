@@ -18,9 +18,10 @@ extern const std::vector<std::string> dozwoloneTypy;
 
 class ID;
 
+
 class Praca {
 
-public:
+private:
 
     int idPraca = 0;
     int rok = 0;
@@ -35,29 +36,77 @@ public:
     std::string slowaKluczowe;
     std::string streszczenie;
 
-    void printTypeList(const std::vector<std::string>);
+public:
+
+    enum messageFlag {
+        initial, error, allowedValue
+    };
+
+    Praca() 
+    {
+        std::cout << "Praca constructor called" << std::endl;        
+    }
+
+    // Funkcje dodajace poszczegolne pola pracy
+
+        // Funkcja przypisujaca id
+        void dodajIdPracy(int lastID);
+
+        // Funkcja przypisujaca typ pracy
+        std::string addTypPracy();
+
+        // Funkcja przypisujaca tytul pracy
+        std::string addTytul();
+
+        // Funkcja przypisujaca nazwisko autora
+        std::string addNazwiskoAutora();
+
+        // Funkcja przypisujaca imiona autora
+        std::string addImionaAutora();
+
+        // Funkcja generujaca inicjaly autora
+        void getInicjal(std::string, std::string& inicjalyAutora, const char);
+
+        // Funkcja przypisujaca rok
+        int addRok();
+
+        // Funkcja przypisujaca nazwisko promotora
+        std::string addNazwiskoPromotora();
+
+        // Funkcja przypisujaca imiona promotora
+        std::string addImionaPromotora();
+
+        // Funkcja przypisujaca slowa kluczowe
+        std::string addSlowaKluczowe();
+
+        // Funkcja przypisujaca streszczenie
+        std::string addStreszczenie();
+
+    // Inne funkcje
+
+
+
+    void printPraca(int id);
+
+    std::string printSelected(int choice) {
+
+        switch (choice) {
+        case (0):
+            return std::to_string(idPraca);
+            break;
+        default:
+            return "NaN";
+            break;
+        }
+    }
+
+    int returnIdPracy() {
+        return idPraca;
+    }
 
     bool validateType(std::string, const std::vector<std::string>);
 
-    std::string addTypPracy();
-
-    std::string addTytul();
-
-    std::string addNazwiskoAutora();
-
-    std::string addImionaAutora();
-
-    void getInicjal(std::string, std::string& inicjalyAutora, const char);
-
-    int addRok();
-
-    std::string addNazwiskoPromotora();
-
-    std::string addImionaPromotora();
-
-    std::string addSlowaKluczowe();
-
-    std::string addStreszczenie();
+   
 
 };
 

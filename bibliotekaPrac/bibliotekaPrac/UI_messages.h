@@ -2,6 +2,8 @@
 #ifndef UI_MESSAGESS_SEEN
 #define UI_MESSAGESS_SEEN
 
+extern const std::vector<std::string> dozwoloneTypy;
+
 void menuMessage() {
 
     std::cout << "Wybierz funkcje programu. Aby wyjsc z programu, nacisnij X." << std::endl;
@@ -47,5 +49,29 @@ void editMessage() {
     std::cout << "[5] Streszczenie" << std::endl;
     std::cout << "[3] Rok powstania" << std::endl;
 }
+
+
+void typPracyMessage(Praca::messageFlag flag) {
+
+    switch (flag) {
+    case Praca::initial:
+        std::cout << "Dodaj typ pracy." << std::endl;
+        break;
+    case Praca::error:
+        std::cout << "Niedozwolony typ pracy." << std::endl;
+        break;
+    case Praca::allowedValue:
+        std::cout << " Dozwolone typy pracy to: " << std::endl;
+        printTypeList(dozwoloneTypy);
+        break;
+    default:
+        break;
+    }
+}
+
+static void printTypeList(const std::vector<std::string> dozwoloneTypy) {
+    for (unsigned int i = 0; i < dozwoloneTypy.size(); i++) std::cout << dozwoloneTypy[i] << std::endl;
+}
+
 
 #endif
