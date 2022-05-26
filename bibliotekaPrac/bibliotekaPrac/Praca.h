@@ -53,34 +53,34 @@ public:
         void dodajIdPracy(int lastID);
 
         // Funkcja przypisujaca typ pracy
-        std::string addTypPracy();
+        void addTypPracy();
 
         // Funkcja przypisujaca tytul pracy
-        std::string addTytul();
+        void addTytul();
 
         // Funkcja przypisujaca nazwisko autora
-        std::string addNazwiskoAutora();
+        void addNazwiskoAutora();
 
         // Funkcja przypisujaca imiona autora
-        std::string addImionaAutora();
+        void addImionaAutora();
 
         // Funkcja generujaca inicjaly autora
         void getInicjal(std::string, std::string& inicjalyAutora, const char);
 
         // Funkcja przypisujaca rok
-        int addRok();
+        void addRok();
 
         // Funkcja przypisujaca nazwisko promotora
-        std::string addNazwiskoPromotora();
+        void addNazwiskoPromotora();
 
         // Funkcja przypisujaca imiona promotora
-        std::string addImionaPromotora();
+        void addImionaPromotora();
 
         // Funkcja przypisujaca slowa kluczowe
-        std::string addSlowaKluczowe();
+        void addSlowaKluczowe();
 
         // Funkcja przypisujaca streszczenie
-        std::string addStreszczenie();
+        void addStreszczenie();
 
     // Inne funkcje
 

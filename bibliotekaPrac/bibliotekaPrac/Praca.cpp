@@ -11,18 +11,13 @@
 #include <limits>
 #include <boost/algorithm/string/case_conv.hpp>
 
-void Praca::clearCin() {
-    std::cin.clear();
-    std::cin.ignore();
-}
-
 // Funkcja przypisujaca id
 void Praca::dodajIdPracy(int lastID) {
     Praca::idPraca = lastID + 1;
 }
 
 // Funkcja przypisujaca typ pracy
-std::string Praca::addTypPracy() {
+void Praca::addTypPracy() {
 
     typPracyMessage(initial);
     typPracyMessage(allowedValues);
@@ -40,45 +35,93 @@ std::string Praca::addTypPracy() {
 
             typPracyMessage(error);
             typPracyMessage(allowedValues);
+
             Praca::clearCin();
 
         }
 
     }
 
-    return temp;
-}
-
-
-
-// Wypisuje wszystkie dane obiektu Praca
-void Praca::printPraca(int id) {
-    std::cout
-        << idPraca << std::endl
-        << typPracy << std::endl
-        << tytul << std::endl
-        << nazwiskoAutora << std::endl
-        << imionaAutora << std::endl
-        << inicjalyAutora << std::endl
-        << rok << std::endl
-        << imionaPromotora << std::endl
-        << slowaKluczowe << std::endl
-        << streszczenie << std::endl;
-}
-
-// Sprawdza, czy rok spe³nia wymagania
- bool validateYear(int input) {
-
-    if (input == 0 || input < MINIMALNY_ROK) return false;
-    return true;
+    Praca::typPracy = temp;
 
 }
 
- bool Praca::validateType(std::string input, const std::vector<std::string> dozwoloneTypy) {
-    return std::find(dozwoloneTypy.begin(), dozwoloneTypy.end(), input) != dozwoloneTypy.end();
+// Funkcja przypisujaca tytul do pracy
+void Praca::addTytul() {
+
+    std::string temp = "";
+
+    while (temp == "") {
+
+        std::cout << "Dodaj tytul pracy" << std::endl;
+
+        std::getline(std::cin, temp);
+
+        if (temp == "") {
+
+            std::cout << "Tytul pracy nie moze byc pusty!" << std::endl;
+            temp = "";
+
+            Praca::clearCin();
+        }
+
+    }
+
+
+    Praca::tytul =  temp;
 }
 
- void Praca::getInicjal(std::string imionaAutora, std::string& inicjalyAutora, const char COMA) {
+// Funkcja przypisujaca nazwisko autora do pracy
+void Praca::addNazwiskoAutora() {
+
+    std::string temp = "";
+
+    while (temp == "") {
+
+        std::cout << "Dodaj nazwisko autora " << std::endl;
+
+        std::cin >> temp;
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+
+        if (temp == "") {
+            std::cout << "Nazwisko autora nie moze byc puste!" << std::endl;
+            temp = "";
+
+            Praca::clearCin();
+        }
+
+    }
+
+    Praca::nazwiskoAutora = temp;
+}
+
+// Funkcja przypisujaca imiona autora do pracy
+void Praca::addImionaAutora() {
+
+    std::string temp = "";
+
+    while (temp == "") {
+
+        std::cout << "Dodaj imiona autora oddzielone przecinkami" << std::endl;
+
+        std::getline(std::cin, temp);
+
+        if (temp == "") {
+            std::cout << "Imiona autora nie moga byc puste!" << std::endl;
+            temp = "";
+
+            Praca::clearCin();
+        }
+
+    }
+
+    getInicjal(temp, Praca::inicjalyAutora, COMA);
+
+    Praca::imionaAutora = temp;
+}
+
+// Funkcja generujaca inicjaly
+void Praca::getInicjal(std::string imionaAutora, std::string &inicjalyAutora, const char COMA) {
 
     std::vector<std::string> imiona{};
 
@@ -95,92 +138,12 @@ void Praca::printPraca(int id) {
         tempString += imiona[i].substr(0, 1) + ". ";
     }
 
-    inicjalyAutora = tempString;
+    Praca::inicjalyAutora = tempString;
 
 }
 
- std::string Praca::addStreszczenie() {
-
-    std::string temp = "";
-
-    std::cout << "Dodaj streszczenie" << std::endl;
-
-    std::getline(std::cin, temp);
-
-    if (temp != "" && temp.size() > 1000) {
-
-        std::cout << "Maksymalna ilosc znakow to 1000!" << std::endl;
-
-        while (temp != "") {
-
-            std::getline(std::cin, temp);
-
-        }
-    }
-
-    return temp;
-
-}
-
- std::string Praca::addSlowaKluczowe() {
-    std::string temp = "";
-
-    std::cout << "Dodaj slowa kluczowe oddzielone srednikami" << std::endl;
-
-    std::getline(std::cin, temp);
-
-    return temp;
-}
-
- std::string Praca::addImionaPromotora() {
-
-    std::string temp = "";
-
-    while (temp == "") {
-
-        std::cout << "Dodaj imiona promotora oddzielone przecinkami" << std::endl;
-
-        std::getline(std::cin, temp);
-
-        if (temp == "") {
-
-            std::cout << "Imiona promotora nie moga byc puste!" << std::endl;
-
-            temp = "";
-
-            Praca::clearCin();
-        }
-
-
-    }
-    return temp;
-}
-
- std::string Praca::addNazwiskoPromotora() {
-
-    std::string temp = "";
-
-    while (temp == "") {
-
-        std::cout << "Dodaj nazwisko promotora" << std::endl;
-
-        std::getline(std::cin, temp);
-
-        if (temp == "") {
-
-            std::cout << "Nazwisko promotora nie moze byc puste!" << std::endl;
-            temp = "";
-
-            Praca::clearCin();
-        }
-
-    }
-
-    return temp;
-
-}
-
- int Praca::addRok() {
+// Funkcja przypisujaca rok do pracy
+void Praca::addRok() {
 
     int temp = 0;
 
@@ -203,21 +166,23 @@ void Praca::printPraca(int id) {
 
     }
 
-    return temp;
+    Praca::rok = temp;
 }
 
- std::string Praca::addImionaAutora() {
+// Funkcja przypisujaca nazwisko promotora do pracy
+void Praca::addNazwiskoPromotora() {
 
     std::string temp = "";
 
     while (temp == "") {
 
-        std::cout << "Dodaj imiona autora oddzielone przecinkami" << std::endl;
+        std::cout << "Dodaj nazwisko promotora" << std::endl;
 
         std::getline(std::cin, temp);
 
         if (temp == "") {
-            std::cout << "Imiona autora nie moga byc puste!" << std::endl;
+
+            std::cout << "Nazwisko promotora nie moze byc puste!" << std::endl;
             temp = "";
 
             Praca::clearCin();
@@ -225,56 +190,111 @@ void Praca::printPraca(int id) {
 
     }
 
-    getInicjal(temp, Praca::inicjalyAutora, COMA);
+    Praca::nazwiskoPromotora = temp;
 
-    return temp;
 }
 
- std::string Praca::addNazwiskoAutora() {
+// Funkcja przypisujaca imiona promotora do pracy
+ void Praca::addImionaPromotora() {
 
     std::string temp = "";
 
     while (temp == "") {
 
-        std::cout << "Dodaj nazwisko autora " << std::endl;
-
-        std::cin >> temp;
-        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-
-        if (temp == "") {
-            std::cout << "Nazwisko autora nie moze byc puste!" << std::endl;
-            temp = "";
-
-            Praca::clearCin();
-        }
-
-    }
-
-    return temp;
-}
-
- std::string Praca::addTytul() {
-
-    std::string temp = "";
-
-    while (temp == "") {
-
-        std::cout << "Dodaj tytul pracy" << std::endl;
+        std::cout << "Dodaj imiona promotora oddzielone przecinkami" << std::endl;
 
         std::getline(std::cin, temp);
 
-
         if (temp == "") {
 
-            std::cout << "Tytul pracy nie moze byc pusty!" << std::endl;
+            std::cout << "Imiona promotora nie moga byc puste!" << std::endl;
+
             temp = "";
 
             Praca::clearCin();
         }
 
+
     }
-
-
-    return temp;
+    Praca::imionaPromotora = temp;
 }
+
+ // Funkcja przypisujaca slowa kluczowe do pracy
+ void Praca::addSlowaKluczowe() {
+    std::string temp = "";
+
+    std::cout << "Dodaj slowa kluczowe oddzielone srednikami" << std::endl;
+
+    std::getline(std::cin, temp);
+
+    Praca::slowaKluczowe = temp;
+}
+
+ // Funkcja przypisujaca streszczenie do pracy
+ void Praca::addStreszczenie() {
+
+     std::string temp = "";
+
+     std::cout << "Dodaj streszczenie" << std::endl;
+
+     std::getline(std::cin, temp);
+
+     if (temp != "" && temp.size() > 1000) {
+
+         std::cout << "Maksymalna ilosc znakow to 1000!" << std::endl;
+
+         while (temp != "") {
+
+             std::getline(std::cin, temp);
+
+         }
+     }
+
+     Praca::streszczenie = temp;
+
+ }
+
+// MISC FUNCTIONS
+
+// Wypisuje wszystkie dane pracy
+void Praca::printPraca(int id) {
+    std::cout
+        << idPraca << std::endl
+        << typPracy << std::endl
+        << tytul << std::endl
+        << nazwiskoAutora << std::endl
+        << imionaAutora << std::endl
+        << inicjalyAutora << std::endl
+        << rok << std::endl
+        << imionaPromotora << std::endl
+        << slowaKluczowe << std::endl
+        << streszczenie << std::endl;
+}
+
+// Sprawdza, czy rok spe³nia wymagania
+ bool validateYear(int input) {
+
+    if (input == 0 || input < MINIMALNY_ROK) return false;
+    return true;
+
+}
+
+ // Sprawdza, czy typ pracy spelnia wymagania
+ bool Praca::validateType(std::string input, const std::vector<std::string> dozwoloneTypy) {
+    return std::find(dozwoloneTypy.begin(), dozwoloneTypy.end(), input) != dozwoloneTypy.end();
+}
+
+ // Funkcja resetuje strumien wejscia
+ void Praca::clearCin() {
+     std::cin.clear();
+     std::cin.ignore();
+ }
+
+
+
+
+
+
+
+
 
