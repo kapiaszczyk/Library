@@ -7,15 +7,14 @@
 #include <iostream>
 #include <fstream>
 #include <sstream>
-#include <boost/algorithm/string/case_conv.hpp>
+#include <limits>
+#include <boost/algorithm/string.hpp>
 
 extern const char COMA;
 extern const char SEMICOLON;
 extern const int MINIMALNY_ROK;
 extern const int ILE_WARTOSCI_PRACA;
 extern const std::vector<std::string> dozwoloneTypy;
-
-class ID;
 
 class Praca {
 
@@ -36,49 +35,46 @@ private:
 
 public:
 
-    enum messageFlag {
-        initial, error, allowedValues
-    };
+    //enum class messageFlag {
+    //    initial, error, allowedValues
+    //};
 
-    Praca() 
-    {
-        std::cout << "Praca constructor called" << std::endl;        
-    }
+    Praca() {}
 
     // Main get functions
 
         // Funkcja przypisujaca id
-        void dodajIdPracy(int lastID);
+        void addIdPracy(int ID, bool creatingNew);
 
         // Funkcja przypisujaca typ pracy
-        void addTypPracy();
+        void addTypPracy(std::string externaValue);
 
         // Funkcja przypisujaca tytul pracy
-        void addTytul();
+        void addTytul(std::string externaValue);
 
         // Funkcja przypisujaca nazwisko autora
-        void addNazwiskoAutora();
+        void addNazwiskoAutora(std::string externaValue);
 
         // Funkcja przypisujaca imiona autora
-        void addImionaAutora();
+        void addImionaAutora(std::string externaValue);
 
         // Funkcja generujaca inicjaly autora
-        void getInicjal(std::string, std::string&, const char);
+        void getInicjal(std::string, const char, std::string externaValue);
 
         // Funkcja przypisujaca rok
-        void addRok();
+        void addRok(int externaValue);
 
         // Funkcja przypisujaca nazwisko promotora
-        void addNazwiskoPromotora();
+        void addNazwiskoPromotora(std::string externaValue);
 
         // Funkcja przypisujaca imiona promotora
-        void addImionaPromotora();
+        void addImionaPromotora(std::string externaValue);
 
         // Funkcja przypisujaca slowa kluczowe
-        void addSlowaKluczowe();
+        void addSlowaKluczowe(std::string externaValue);
 
         // Funkcja przypisujaca streszczenie
-        void addStreszczenie();
+        void addStreszczenie(bool addingNew, std::string externaValue);
 
     // Main read functions
 

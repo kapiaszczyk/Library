@@ -9,6 +9,7 @@
 #include <cstring>  // strtok, etc
 #include <sstream>
 #include <windows.h>
+#include <set>
 
 #include "Praca.h"
 #include "Biblioteka.h"
@@ -25,13 +26,10 @@ const std::vector<std::string> dozwoloneTypy = { "mgr", "inz", "lic" };
 
 int main() {
 
-    //Biblioteka biblioteka;
+    Biblioteka biblioteka;
 
-    //biblioteka.Biblioteka::wczytajPrace(biblioteka.Biblioteka::listaPrac);
-    //biblioteka.Biblioteka::menu(biblioteka);
-
-    Praca newPraca;
-
+    biblioteka.Biblioteka::wczytajPrace(biblioteka.Biblioteka::listaPrac);
+    biblioteka.Biblioteka::menu(biblioteka);
 
 
     //Sleep(36000);

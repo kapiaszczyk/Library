@@ -1,5 +1,3 @@
-#include <iostream>
-#include <vector>
 #include "UI_messages.h"
 #include "Praca.h"
 
@@ -7,14 +5,20 @@ void printTypeList(const std::vector<std::string> dozwoloneTypy) {
     for (unsigned int i = 0; i < dozwoloneTypy.size(); i++) std::cout << dozwoloneTypy[i] << std::endl;
 }
 
+
+void editMessageInitial() {
+    std::cout << "Podaj ID pracy, ktora chcesz edytowac" << std::endl;
+}
+
 void editMessage() {
     std::cout << "Ktora wartosc chcesz edytowac?" << std::endl;
-    std::cout << "[1] Nazwisko autora" << std::endl;
-    std::cout << "[2] Nazwisko promotora" << std::endl;
-    std::cout << "[3] Tytul" << std::endl;
-    std::cout << "[4] Slowo kluczowe" << std::endl;
-    std::cout << "[5] Streszczenie" << std::endl;
-    std::cout << "[3] Rok powstania" << std::endl;
+    std::cout << "[1] Typ pracy" << std::endl;
+    std::cout << "[2] Tytul" << std::endl;
+    std::cout << "[3] Nazwisko autora" << std::endl;
+    std::cout << "[4] Imie autora" << std::endl;
+    std::cout << "[5] Rok powstania" << std::endl;
+    std::cout << "[6] Slowo kluczowe" << std::endl;
+    std::cout << "[7] Streszczenie" << std::endl;
 }
 
 void menuMessage() {
@@ -48,23 +52,29 @@ void subMenuMessage() {
     std::cout << "[1] Wyswietlanie liczby wszystkich prac" << std::endl;
     std::cout << "[2] Wyswietlanie liczby prac dla poszczegolnych promotorow" << std::endl;
     std::cout << "[3] Wyswietlanie 10 slow kluczowych" << std::endl;
-    std::cout << "[4] Wyswietlanie 10 slow kluczowych" << std::endl;
     std::cout << "[X] Wyjscie z dodatkowych funkcji" << std::endl;
 }
 
-void typPracyMessage(Praca::messageFlag flag) {
-    switch (flag) {
-    case Praca::initial:
-        std::cout << "Dodaj typ pracy." << std::endl;
-        break;
-    case Praca::error:
-        std::cout << "Niedozwolony typ pracy." << std::endl;
-        break;
-    case Praca::allowedValues:
-        std::cout << " Dozwolone typy pracy to: " << std::endl;
-        printTypeList(dozwoloneTypy);
-        break;
-    default:
-        break;
-    }
-}
+
+ void errorLibraryEmpty() {
+     std::cout << "Nie mozna wyswietlic/wczytac zawartosci biblioteki, poniewaz jest ona pusta. Dodaj prace, aby umozliwic wyswietlanie/wczytanie jej zawartosci." << std::endl;
+ }
+
+
+
+//void typPracyMessage(enum Praca::messageFlag flag) {
+//    switch (flag) {
+//    case Praca::messageFlag::initial:
+//        std::cout << "Dodaj typ pracy." << std::endl;
+//        break;
+//    case Praca::messageFlag::error:
+//        std::cout << "Niedozwolony typ pracy." << std::endl;
+//        break;
+//    case Praca::messageFlag::allowedValues:
+//        std::cout << " Dozwolone typy pracy to: " << std::endl;
+//        printTypeList(dozwoloneTypy);
+//        break;
+//    default:
+//        break;
+//    }
+//}

@@ -1,88 +1,44 @@
-ID 0
+ID 1
 TP mgr
-TT Tytul pracy bardzo wazny
-AN Nowak
-AI Anna,Magdalena
-II A. M.
-YY 2003
-PN Nowy
-PI Marek
-SK kwiatki
-ST 
+TT Kamienie i patyki
+AN Nowakowska
+AI Maria,Magdalena
+II M. M. 
+YY 2005
+PN Marek
+PI Mikolaj
+SK Kamienie;patyki
+ST Praca omawia wplyw kamieni i patykow na srodowisko. 
 ID 2
 TP mgr
-TT jakistam tytul 23
-AN nowak
-AI Magdalena,Maja
-II M. M.
-YY 2003
-PN nie
-PI 
-SK 
-ST 
-ID 5
-TP lic
-TT nie dzieki
-AN nowy
-AI Marek,Krystian
-II M. K. 
-YY 2034
-PN Nowy
-PI Marek
-SK kwiatki
-ST 
-ID 55
-TP lic
-TT nie ma tytulu
-AN nowak
-AI Maja,Magdalena
-II M. M.
-YY 2006
-PN Nowy
-PI tak
-SK morze
-ST 
-ID 56
-TP mgr
-TT Funkcje liniowe
-AN Nowak
-AI Mikolaj,Maciej
+TT Kamienie i wrony
+AN Nowa
+AI Maria,Magdalena
 II M. M. 
-YY 2015
-PN Nowy
-PI Jan
-SK nie
-ST 
-ID 57
-TP lic
-TT Grafika komputerowa
-AN Wiosna
-AI Magda
+YY 2008
+PN Marek
+PI Mikolaj
+SK Kamienie;wrony
+ST Praca omawia wplyw kamieni i wron na srodowisko. 
+ID 3
+TP mgr
+TT Klawiatura
+AN Majowska
+AI Magdalena
 II M. 
-YY 2018
-PN Nowy
-PI Marek
-SK nie
-ST 
-ID 58
-TP inz
-TT Technika budowy kompozytu
-AN Radek
-AI Radosla
-II R. 
-YY 2022
-PN Nowy
-PI Tomasz
-SK kompozyty
-ST 
-ID 59
-TP inz
-TT NIe
-AN Tak
-AI NIe
-II N. 
-YY 2033
-PN Nie
-PI Nie
-SK Nie
-ST 
+YY 2012
+PN Marek
+PI Mikolaj
+SK Klawiatury
+ST Klawiatura
+ID 4
+TP mgr
+TT Tytul
+AN Marek
+AI Marian
+II M. 
+YY 2055
+PN Marek
+PI Marian
+SK Kamienie
+ST Klawiatura
