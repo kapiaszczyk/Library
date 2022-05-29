@@ -56,7 +56,7 @@ void searchMenuMessage() {
     std::cout << "[4] Slowo kluczowe\n";
     std::cout << "[5] Streszczenie\n";
     std::cout << "[6] Rok powstania\n";
-    std::cout << "[7] Wyjscie z wyszukiwania\n" << std::flush;
+    std::cout << "[7] Anuluj wyszukiwanie\n" << std::flush;
     coutInputIndicator();
 
 }
@@ -74,8 +74,6 @@ void subMenuMessage() {
  void errorLibraryEmpty() {
      std::cout << ">> Nie mozna wyswietlic/wczytac zawartosci biblioteki, poniewaz jest ona pusta. Dodaj prace, aby umozliwic wyswietlanie/wczytanie jej zawartosci.\n";
  }
-
-
 
 void typPracyMessage(int x) {
     switch (x) {
