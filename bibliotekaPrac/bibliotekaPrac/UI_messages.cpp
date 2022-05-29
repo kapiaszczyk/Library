@@ -19,7 +19,7 @@ void editMessageInitial() {
 }
 
 void editMessage() {
-    std::cout << "Ktora wartosc chcesz edytowac?\n";
+    std::cout << ">> Ktora wartosc chcesz edytowac?\n";
     std::cout << "[1] Typ pracy\n";
     std::cout << "[2] Tytul\n";
     std::cout << "[3] Nazwisko autora\n";
