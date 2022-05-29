@@ -1,44 +1,33 @@
 ID 1
 TP mgr
-TT Kamienie i patyki
+TT Edytowany tytul pracy
 AN Nowakowska
-AI Maria,Magdalena
-II M. M. 
+AI Emilia, Ewa
+II E. E. 
 YY 2005
 PN Marek
 PI Mikolaj
-SK Kamienie;patyki
-ST Praca omawia wplyw kamieni i patykow na srodowisko. 
+SK kamienie;patyki
+ST Edytowane streszczenie pracy 1
 ID 2
 TP mgr
 TT Kamienie i wrony
 AN Nowa
-AI Maria,Magdalena
+AI Maria, Magdalena
 II M. M. 
 YY 2008
 PN Marek
 PI Mikolaj
-SK Kamienie;wrony
+SK kamienie;wrony
 ST Praca omawia wplyw kamieni i wron na srodowisko. 
 ID 3
-TP mgr
-TT Klawiatura
-AN Majowska
-AI Magdalena
-II M. 
-YY 2012
-PN Marek
-PI Mikolaj
-SK Klawiatury
-ST Klawiatura
-ID 4
-TP mgr
-TT Tytul
-AN Marek
-AI Marian
-II M. 
-YY 2055
+TP lic
+TT New edited title
+AN Nowakowski
+AI Kamil
+II K. 
+YY 2015
 PN Marek
 PI Marian
-SK Kamienie
-ST Klawiatura
+SK klawiatura
+ST Praca traktuje o klawiaturach.

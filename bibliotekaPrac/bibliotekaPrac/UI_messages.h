@@ -25,7 +25,10 @@ extern void editMessageInitial();
 
 extern void errorLibraryEmpty();
 
+extern void messageFoundInID();
 
-// extern void typPracyMessage(enum Praca::messageFlag flag);
+extern void typPracyMessage(int);
+
+extern void coutInputIndicator();
 
 #endif

@@ -5,15 +5,18 @@
 
 enum class messageFlag {};
 
+void  Praca::clearCin() {
+	std::cin.clear();
+	std::cin.ignore();
+}
+
 	void Praca::addIdPracy(int ID = 0, bool creatingNew = false) {
 		if (!creatingNew) Praca::idPraca = ID;
 		else Praca::idPraca = ID + 1;
 	}
+	
 
 	void Praca::addTypPracy(std::string externaValue = "") {
-
-		//typPracyMessage(Praca::messageFlag::initial);
-		//typPracyMessage(Praca::messageFlag::allowedValues);
 
 		if (externaValue != "") {
 			Praca::typPracy = externaValue;
@@ -21,7 +24,8 @@ enum class messageFlag {};
 
 		else {
 
-			std::cout << "Dodaj typ pracy" << std::endl;
+			typPracyMessage(0);
+			coutInputIndicator();
 
 			std::string temp = "";
 
@@ -34,8 +38,8 @@ enum class messageFlag {};
 
 				if (!Praca::validateType(temp, dozwoloneTypy)) {
 
-					//typPracyMessage(Praca::messageFlag::error);
-					//typPracyMessage(Praca::messageFlag::allowedValues);
+					typPracyMessage(2);
+					typPracyMessage(1);
 
 					Praca::clearCin();
 
@@ -53,11 +57,13 @@ enum class messageFlag {};
 		}
 
 		else {
+
 			std::string temp = "";
 
 			while (temp == "") {
 
-				std::cout << "Dodaj tytul pracy" << std::endl;
+				std::cout << ">> Dodaj tytul pracy" << std::endl;
+				coutInputIndicator();
 
 				std::getline(std::cin, temp);
 
@@ -87,10 +93,10 @@ enum class messageFlag {};
 
 			while (temp == "") {
 
-				std::cout << "Dodaj nazwisko autora " << std::endl;
+				std::cout << ">> Dodaj nazwisko autora " << std::endl;
+				coutInputIndicator();
 
 				std::cin >> temp;
-				std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 
 				if (temp == "") {
 					std::cout << "Nazwisko autora nie moze byc puste!" << std::endl;
@@ -116,8 +122,10 @@ enum class messageFlag {};
 
 			while (temp == "") {
 
-				std::cout << "Dodaj imiona autora oddzielone przecinkami" << std::endl;
+				std::cout << ">> Dodaj imiona autora oddzielone przecinkami" << std::endl;
+				coutInputIndicator();
 
+				std::cin.ignore();
 				std::getline(std::cin, temp);
 
 				if (temp == "") {
@@ -155,7 +163,6 @@ enum class messageFlag {};
 			}
 
 			for (unsigned int i = 0; i < imiona.size(); i++) {
-				std::cout << imiona[i] << " " << imiona[i].substr(0, 1) << std::endl;
 				tempString += imiona[i].substr(0, 1) + ". ";
 			}
 
@@ -174,14 +181,14 @@ enum class messageFlag {};
 
 			while (!validateYear(temp)) {
 
-				std::cout << "Dodaj rok" << std::endl;
-
+				std::cout << ">> Dodaj rok" << std::endl;
+				coutInputIndicator();
+				
 				std::cin >> temp;
-				std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 
 				if (!Praca::validateYear(temp)) {
 
-					std::cout << "Minimalny rok to " << MINIMALNY_ROK << std::endl;
+					std::cout << ">> Minimalny rok to " << MINIMALNY_ROK << std::endl;
 					temp = 0;
 
 					Praca::clearCin();
@@ -205,8 +212,10 @@ enum class messageFlag {};
 
 			while (temp == "") {
 
-				std::cout << "Dodaj nazwisko promotora" << std::endl;
+				std::cout << ">> Dodaj nazwisko promotora" << std::endl;
+				coutInputIndicator();
 
+				std::cin.ignore();
 				std::getline(std::cin, temp);
 
 				if (temp == "") {
@@ -234,13 +243,14 @@ enum class messageFlag {};
 
 			while (temp == "") {
 
-				std::cout << "Dodaj imiona promotora oddzielone przecinkami" << std::endl;
+				std::cout << ">> Dodaj imie promotora" << std::endl;
+				coutInputIndicator();
 
 				std::getline(std::cin, temp);
 
 				if (temp == "") {
 
-					std::cout << "Imiona promotora nie moga byc puste!" << std::endl;
+					std::cout << "Imie promotora nie moga byc puste!" << std::endl;
 
 					temp = "";
 
@@ -262,9 +272,13 @@ enum class messageFlag {};
 		else {
 			std::string temp = "";
 
-			std::cout << "Dodaj slowa kluczowe oddzielone srednikami" << std::endl;
+			std::cout << ">> Dodaj slowa kluczowe oddzielone srednikami"
+				<< std::endl;
+			coutInputIndicator();
 
 			std::getline(std::cin, temp);
+
+			boost::algorithm::to_lower(temp);
 
 			Praca::slowaKluczowe = temp;
 		}
@@ -278,9 +292,10 @@ enum class messageFlag {};
 
 		else {
 
-			std::string temp = "";
+			std::string temp;
+			std::cout << ">> Dodaj streszczenie" << std::endl;
+			coutInputIndicator();
 
-			std::cout << "Dodaj streszczenie" << std::endl;
 			std::getline(std::cin, temp);
 
 			if (temp != "" && temp.size() > 1000) {
@@ -322,6 +337,237 @@ enum class messageFlag {};
 
 	std::string Praca::readStreszczenie() { return Praca::streszczenie; }
 
+// Edit member data functions
+
+	void Praca::editTypPracy() {
+
+		std::cout << "Podaj nowy typ pracy" << std::endl;
+		coutInputIndicator();
+		std::string temp;
+
+		do {
+
+			std::cin >> temp;
+
+			boost::algorithm::to_lower(temp);
+
+			if (!Praca::validateType(temp, dozwoloneTypy)) {
+
+				std::cout << "Nieprawidlowy typ pracy" << std::endl;
+
+				Praca::clearCin();
+
+			}
+
+		} while (!Praca::validateType(temp, dozwoloneTypy));
+
+		Praca::typPracy = temp;
+
+	}
+
+	void Praca::editTytul() {
+
+			std::string temp;
+
+			do {
+
+				std::cout << ">> Dodaj tytul pracy" << std::endl;
+				coutInputIndicator();
+
+				std::cin.ignore();
+				std::getline(std::cin, temp);
+
+				if (temp == "") {
+
+					std::cout << "Tytul pracy nie moze byc pusty!" << std::endl;
+					temp = "";
+					Praca::clearCin();
+				}
+			} while (temp == "");
+
+
+			Praca::tytul = temp;
+		
+	}
+
+	void Praca::editNazwiskoAutora() {
+
+
+			std::string temp = "";
+
+			while (temp == "") {
+
+				std::cout << ">> Dodaj nazwisko autora " << std::endl;
+				coutInputIndicator();
+				std::cin.ignore();
+				std::cin >> temp;
+
+				if (temp == "") {
+					std::cout << "Nazwisko autora nie moze byc puste!" << std::endl;
+					temp = "";
+
+					Praca::clearCin();
+				}
+
+			}
+
+			Praca::nazwiskoAutora = temp;
+		
+	}
+
+	void Praca::editImionaAutora() {
+
+
+			std::string temp = "";
+
+			while (temp == "") {
+
+				std::cout << ">> Dodaj imiona autora oddzielone przecinkami" << std::endl;
+				coutInputIndicator();
+
+				std::cin.ignore();
+				std::getline(std::cin, temp);
+
+				if (temp == "") {
+					std::cout << "Imiona autora nie moga byc puste!" << std::endl;
+					temp = "";
+
+					Praca::clearCin();
+				}
+
+			}
+
+			getInicjal(temp, COMA, "");
+
+			Praca::imionaAutora = temp;
+		
+	}
+
+	void Praca::editRok() {
+
+
+			int temp = 0;
+
+			while (!validateYear(temp)) {
+
+				std::cout << ">> Dodaj rok" << std::endl;
+				coutInputIndicator();
+
+				std::cin.ignore();
+				std::cin >> temp;
+
+				if (!Praca::validateYear(temp)) {
+
+					std::cout << ">> Minimalny rok to " << MINIMALNY_ROK << std::endl;
+					temp = 0;
+
+					Praca::clearCin();
+
+				}
+
+			}
+
+			Praca::rok = temp;
+		
+	}
+
+	void Praca::editNazwiskoPromotora() {
+
+
+			std::string temp = "";
+
+			while (temp == "") {
+
+				std::cout << ">> Dodaj nazwisko promotora" << std::endl;
+				coutInputIndicator();
+
+				std::cin.ignore();
+				std::getline(std::cin, temp);
+
+				if (temp == "") {
+
+					std::cout << "Nazwisko promotora nie moze byc puste!" << std::endl;
+					temp = "";
+
+					Praca::clearCin();
+				}
+
+			}
+
+			Praca::nazwiskoPromotora = temp;
+		
+	}
+
+	void Praca::editImionaPromotora() {
+
+
+			std::string temp = "";
+
+			while (temp == "") {
+
+				std::cout << ">> Dodaj imie promotora" << std::endl;
+				coutInputIndicator();
+
+				std::getline(std::cin, temp);
+
+				if (temp == "") {
+
+					std::cout << "Imie promotora nie moga byc puste!" << std::endl;
+
+					temp = "";
+
+					Praca::clearCin();
+				}
+
+
+			}
+
+			Praca::imionaPromotora = temp;
+
+			Praca::getInicjal(Praca::imionaAutora, COMA, "");
+		
+	}
+
+	void Praca::editSlowaKluczowe() {
+
+
+			std::string temp = "";
+
+			std::cout << ">> Dodaj slowa kluczowe oddzielone srednikami"
+				<< std::endl;
+			coutInputIndicator();
+			std::cin.ignore();
+			std::getline(std::cin, temp);
+
+			boost::algorithm::to_lower(temp);
+
+			Praca::slowaKluczowe = temp;
+		
+	}
+
+	void Praca::editStreszczenie() {
+
+			std::string temp;
+			std::cout << ">> Dodaj streszczenie" << std::endl;
+			coutInputIndicator();
+			std::cin.ignore();
+			std::getline(std::cin, temp);
+
+			if (temp != "" && temp.size() > 1000) {
+
+				std::cout << "Maksymalna ilosc znakow to 1000!" << std::endl;
+
+				while (temp != "") {
+
+					std::getline(std::cin, temp);
+
+				}
+			}
+
+			Praca::streszczenie = temp;
+	}
+
+
 
 // MISC FUNCTIONS
 
@@ -350,11 +596,6 @@ enum class messageFlag {};
 
 	bool Praca::validateType(std::string input, const std::vector<std::string> dozwoloneTypy) {
 		return std::find(dozwoloneTypy.begin(), dozwoloneTypy.end(), input) != dozwoloneTypy.end();
-	}
-
-	void Praca::clearCin() {
-		std::cin.clear();
-		std::cin.ignore();
 	}
 
 	std::string Praca::printSelected(int choice) {

@@ -3,7 +3,6 @@
 #include "Praca.h"
 #include "UI_messages.h"
 
-#include <set>
 
 bool isLibraryEmpty(Biblioteka biblioteka) {
     if ((std::filesystem::file_size("prace.txt") == 0)) return true;
@@ -50,43 +49,36 @@ void Biblioteka::menu(Biblioteka& biblioteka) {
     int choice{};
     bool subMenu = false;
 
-    while (choice != 7) {
+    do  {
 
         menuMessage();
 
+        choice = 0;
         std::cin >> choice;
 
         switch (choice) {
         case 1:
-            std::cout << "Dodawanie prac" << std::endl;
             biblioteka.dodajPrace();
             break;        
         case 2:
-            std::cout << "Edycja pracy" << std::endl;
             biblioteka.edytujPrace(biblioteka.listaPrac);
             break;
         case 3:
-            std::cout << "Wyswietlanie listy prac w formacie skroconym" << std::endl;
             biblioteka.wyswSkrocone(biblioteka.listaPrac);
-
             break;
         case 4:
-            std::cout << "Wyswietlanie listy prac w formacie pelnym" << std::endl;
             biblioteka.wyswPelne(biblioteka.listaPrac);
             break;
         case 5:
-            std::cout << "Wyszukiwanie pracy" << std::endl;
             biblioteka.szukaj();
             break;
         case 6:
-            std::cout << "Dodatkowe funkcje" << std::endl;
             subMenu = true;
             break;
         }
 
-        if (subMenu) {
+        while (subMenu) {
 
-            subMenu = false;
             int choice{};
 
             subMenuMessage();
@@ -94,27 +86,26 @@ void Biblioteka::menu(Biblioteka& biblioteka) {
             std::cin >> choice;
 
             switch (choice) {
-            case 1:
-                std::cout << "Wyswietlanie liczby wszystkich prac" << std::endl;
+            case 1:              
                 Biblioteka::wyswietlLiczbePrac(listaPrac);
                 break;
             case 2:
-                std::cout << "Wyswietlanie liczby prac dla poszczegolnych promotorow" << std::endl;
                 Biblioteka::ilePracPromotora();
                 break;
             case 3:
-                std::cout << "Wyswietlanie 10 slow kluczowych" << std::endl;
+                Biblioteka::najczSlowaKluczowe();
+                break;
+            case 4:
+                subMenu = false;
                 break;
             default:
-                std::cout << "Wybiez jedna z trzech funkcji" << std::endl;
+                std::cout << "Wybierz jedna z trzech funkcji" << std::endl;
                 break;
 
             }
         }
 
-
-
-    }
+    } while (choice != 7);
 }
 
 int Biblioteka::checkValue(std::string line, const std::string id[]) {
@@ -223,17 +214,19 @@ void Biblioteka::wczytajPrace(std::vector<std::pair<int, Praca>>& listaPrac) {
 // Wyswietla skrocona liste prac
 void Biblioteka::wyswSkrocone(std::vector<std::pair<int, Praca>> listaPrac) {
 
+    std::cout << ">>  Lista prac - format skrocony" << std::endl;
+
     if (listaPrac.size() == 0) {
         errorLibraryEmpty();
     }
     else {
         for (unsigned int i = 0; i < listaPrac.size(); ++i) {
-            std::cout <<
-                std::to_string(listaPrac[i].second.Praca::readIdPracy()) + " " +
+            std::cout << +"{" +
+                std::to_string(listaPrac[i].second.Praca::readIdPracy()) + "} " +
                 listaPrac[i].second.Praca::readTypPracy() + " " +
                 listaPrac[i].second.Praca::readInicjal() +
-                listaPrac[i].second.Praca::readNazwiskoAutora() + " " +
-                listaPrac[i].second.Praca::readTytul() + " " +
+                listaPrac[i].second.Praca::readNazwiskoAutora() + " \"" +
+                listaPrac[i].second.Praca::readTytul() + "\" " +
                 std::to_string(listaPrac[i].second.Praca::readRok()) << std::endl;
         }
     }
@@ -241,6 +234,8 @@ void Biblioteka::wyswSkrocone(std::vector<std::pair<int, Praca>> listaPrac) {
 
 // Wyswietla pelna liste prac
 void Biblioteka::wyswPelne(std::vector<std::pair<int, Praca>> listaPrac) {
+
+    std::cout << ">> Lista prac - format pelny" << std::endl;
 
     if (listaPrac.size() == 0) {
         errorLibraryEmpty();
@@ -266,14 +261,14 @@ void Biblioteka::wyswPelne(std::vector<std::pair<int, Praca>> listaPrac) {
 // Funkcja pozwalajace dodac nowa prace
 void Biblioteka::dodajPrace() {
 
+    std::cout << ">> Dodawanie prac" << std::endl;
+
     Praca nowaPraca;
-    std::cout << "Dodano nowa instancje praca" << std::endl;
     if (listaPrac.size() == 0) {
         nowaPraca.Praca::addIdPracy(0, true);
     }
     else nowaPraca.Praca::addIdPracy(Biblioteka::getLastId(listaPrac), true);
-    std::cout << "Do pracy przypisano ID" << std::endl;
-    std::cout << "ID tej pracy: " << nowaPraca.Praca::printSelected(0) << std::endl;
+    std::cout << ">> ID nowej pracy: " << nowaPraca.Praca::printSelected(0) << std::endl;
 
     nowaPraca.Praca::addTypPracy("");
     nowaPraca.Praca::addTytul("");
@@ -315,9 +310,9 @@ void Biblioteka::dodajPrace() {
 
  void Biblioteka::editAgain(bool & restart) {
 
-     std::cout << "Czy chcesz edytowac inna wartosc?" << std::endl;
-     std::cout << "y/n" << std::endl;
-
+     std::cout << ">> Czy chcesz edytowac inna wartosc? y/n\n";
+     coutInputIndicator();
+     std::cin.clear();
      char choice;
      std::cin >> choice;
 
@@ -327,7 +322,7 @@ void Biblioteka::dodajPrace() {
  }
 
 // Pozwala edytowac wybrana prace
- void Biblioteka::edytujPrace(std::vector<std::pair<int, Praca>> listaPrac) {
+ void Biblioteka::edytujPrace(std::vector<std::pair<int, Praca>> & listaPrac) {
 
      bool restart = false;
 
@@ -335,6 +330,9 @@ void Biblioteka::dodajPrace() {
          errorLibraryEmpty();
      }
      else{
+
+         std::cout << ">> Edycja pracy" << std::endl;
+
          do {
 
              restart = false;
@@ -350,7 +348,7 @@ void Biblioteka::dodajPrace() {
              while (!found) {
                  for (unsigned int i = 0; i < listaPrac.size(); i++) {
                      if (listaPrac[i].first == temp) {
-                         std::cout << "Znaleziono prace" << std::endl;
+                         std::cout << ">> Znaleziono prace" << std::endl;
                          idZnalezionejPracy = listaPrac[i].first;
                          indeksZnalezionejPracy = i;
                          found = true;
@@ -362,10 +360,9 @@ void Biblioteka::dodajPrace() {
              }
 
              if (!found) {
-                 std::cout << "Nie ma takiej pracy!" << std::endl;
-                 std::cout << "Czy chcesz wyszukac prace jeszcze raz? " << std::endl;
-                 std::cout << "y/n" << std::endl;
-
+                 std::cout << ">> Nie ma takiej pracy!" << std::endl;
+                 std::cout << ">> Czy chcesz wyszukac prace jeszcze raz? y/n" << std::endl;
+                 coutInputIndicator();
                  char choice;
 
                  std::cin >> choice;
@@ -400,43 +397,38 @@ void Biblioteka::dodajPrace() {
 
                      switch (choice) {
                      case 1:
-                         std::cout << "Podaj nowy typ pracy" << std::endl;
-                         listaPrac[indeksZnalezionejPracy].second.Praca::addTypPracy("");
-
+                         listaPrac[indeksZnalezionejPracy].second.Praca::editTypPracy();
                          Biblioteka::editAgain(restartEditing);
 
                          break;
                      case 2:
-                         std::cout << "Podaj nowy tytul pracy" << std::endl;
-                         listaPrac[indeksZnalezionejPracy].second.Praca::addTytul("");
-
+                         listaPrac[indeksZnalezionejPracy].second.Praca::editTytul();
                          Biblioteka::editAgain(restartEditing);
 
                          break;
                      case 3:
-                         std::cout << "Podaj nazwiska autora pracy" << std::endl;
-                         listaPrac[indeksZnalezionejPracy].second.Praca::addNazwiskoAutora("");
+                         listaPrac[indeksZnalezionejPracy].second.Praca::editNazwiskoAutora();
                          Biblioteka::editAgain(restartEditing);
                          break;
                      case 4:
-                         std::cout << "Podaj imiona autora pracy" << std::endl;
-                         listaPrac[indeksZnalezionejPracy].second.Praca::addImionaAutora("");
+                         listaPrac[indeksZnalezionejPracy].second.Praca::editImionaAutora();
                          Biblioteka::editAgain(restartEditing);
                          break;
                      case 5:
-                         std::cout << "Podaj rok pracy" << std::endl;
-                         listaPrac[indeksZnalezionejPracy].second.Praca::addRok(0);
+                         listaPrac[indeksZnalezionejPracy].second.Praca::editRok();
                          Biblioteka::editAgain(restartEditing);
                          break;
                      case 6:
-                         std::cout << "Podaj nowe slowa kluczowe" << std::endl;
-                         listaPrac[indeksZnalezionejPracy].second.Praca::addSlowaKluczowe("");
+                         listaPrac[indeksZnalezionejPracy].second.Praca::editSlowaKluczowe();
                          Biblioteka::editAgain(restartEditing);
                          break;
                      case 7:
-                         std::cout << "Podaj nowe streszczenie" << std::endl;
-                         listaPrac[indeksZnalezionejPracy].second.Praca::addStreszczenie(false, "");
+                         listaPrac[indeksZnalezionejPracy].second.Praca::editStreszczenie();
                          Biblioteka::editAgain(restartEditing);
+                         break;
+                     case 8:
+                         std::cout << ">> Anulowanie edycji\n";
+                         break;
                      default:
                          break;
                      }
@@ -450,6 +442,9 @@ void Biblioteka::dodajPrace() {
 
 // Wyszukuje 
  void Biblioteka::szukaj() {
+
+     std::cout << "Wyszukiwanie pracy" << std::endl;
+
      if (listaPrac.size() == 0) {
          errorLibraryEmpty();
      }
@@ -466,8 +461,8 @@ void Biblioteka::dodajPrace() {
          switch (choice) {
 
          case 1:
-             std::cout << "Wyszukiwanie przez nazwisko\n";
-
+             std::cout << ">> Wyszukiwanie nazwiskiem autora\n";
+             coutInputIndicator();
              std::cin >> search_key;
              boost::algorithm::to_lower(search_key);
 
@@ -478,7 +473,7 @@ void Biblioteka::dodajPrace() {
                  }
              }
 
-             std::cout << "Znaleziono w pracach o ID: ";
+             messageFoundInID();
 
              for (unsigned int i = 0; i < idWynikow.size(); i++)
              {
@@ -487,8 +482,8 @@ void Biblioteka::dodajPrace() {
 
             break; 
          case 2:
-             std::cout << "Wyszukiwanie przez nazwisko promotora\n";
-
+             std::cout << ">> Wyszukiwanie nazwiskiem promotora\n";
+             coutInputIndicator();
              std::cin >> search_key;
              boost::algorithm::to_lower(search_key);
 
@@ -499,7 +494,7 @@ void Biblioteka::dodajPrace() {
                  }
              }
 
-             std::cout << "Znaleziono w pracach o ID: ";
+             messageFoundInID();
 
              for (unsigned int i = 0; i < idWynikow.size(); i++)
              {
@@ -508,8 +503,8 @@ void Biblioteka::dodajPrace() {
 
              break;
          case 3:
-             std::cout << "Wyszukiwanie tytulem\n";
-
+             std::cout << ">> Wyszukiwanie tytulem\n";
+             coutInputIndicator();
              std::cin >> search_key;
              boost::algorithm::to_lower(search_key);
 
@@ -520,7 +515,7 @@ void Biblioteka::dodajPrace() {
                  }
              }
 
-             std::cout << "Znaleziono w pracach o ID: ";
+             messageFoundInID();
 
              for (unsigned int i = 0; i < idWynikow.size(); i++)
              {
@@ -529,7 +524,8 @@ void Biblioteka::dodajPrace() {
 
              break;
          case 4:
-             std::cout << "Wyszukiwanie slowami kluczkowymi\n";
+             std::cout << ">> Wyszukiwanie slowami kluczowymi\n";
+             coutInputIndicator();
              std::cin >> search_key;
              boost::algorithm::to_lower(search_key);
 
@@ -540,7 +536,7 @@ void Biblioteka::dodajPrace() {
                  }
              }
 
-             std::cout << "Znaleziono w pracach o ID: ";
+             messageFoundInID();
 
              for (unsigned int i = 0; i < idWynikow.size(); i++)
              {
@@ -549,7 +545,8 @@ void Biblioteka::dodajPrace() {
 
              break;
          case 5:
-             std::cout << "Wyszukiwanie streszczeniem\n";
+             std::cout << ">> Wyszukiwanie streszczeniem\n";
+             coutInputIndicator();
              std::cin >> search_key;
              boost::algorithm::to_lower(search_key);
 
@@ -560,7 +557,7 @@ void Biblioteka::dodajPrace() {
                  }
              }
 
-             std::cout << "Znaleziono w pracach o ID: ";
+             messageFoundInID();
 
              for (unsigned int i = 0; i < idWynikow.size(); i++)
              {
@@ -569,7 +566,8 @@ void Biblioteka::dodajPrace() {
 
              break;
          case 6:
-             std::cout << "Wyszukiwanie rokiem powstania\n";
+             std::cout << ">> Wyszukiwanie rokiem powstania\n";
+             coutInputIndicator();
              std::cin >> search_key;
 
              for (unsigned int i = 0; i < listaPrac.size(); i++)
@@ -579,7 +577,7 @@ void Biblioteka::dodajPrace() {
                  }
              }
 
-             std::cout << "Znaleziono w pracach o ID: ";
+             messageFoundInID();
 
              for (unsigned int i = 0; i < idWynikow.size(); i++)
              {
@@ -605,6 +603,8 @@ void Biblioteka::dodajPrace() {
 
 // Wyswietla liczbe prac dla danego promotora
  void Biblioteka::ilePracPromotora() {
+
+     std::cout << "Wyswietlanie liczby prac dla poszczegolnych promotorow" << std::endl;
 
      if (listaPrac.size() == 0) {
          errorLibraryEmpty();
@@ -632,7 +632,7 @@ void Biblioteka::dodajPrace() {
 
          for (unsigned int j = 0; j < listaPromotora.size(); j++) {
 
-             std::cout << "Promotor: " << listaPromotora[j].first << " ilosc: "  << listaPromotora[j].second << std::endl;
+             std::cout << ">> Promotor: " << listaPromotora[j].first << " ilosc prac: "  << listaPromotora[j].second << std::endl;
              
          }
 
@@ -642,10 +642,50 @@ void Biblioteka::dodajPrace() {
 
 // Wyswietla najczesciej wystepujace slowa kluczowe
  void Biblioteka::najczSlowaKluczowe() {
+
+     std::cout << ">> Wyswietlanie 10 najczesciej powtarzajacych sie slow kluczowych\n";
+     std::cout << "-----------------------------------------------------------------\n";
+
      if (listaPrac.size() == 0) {
          errorLibraryEmpty();
      }
      else {
 
+         std::vector<std::string> listaSlow;
+
+         for (unsigned int i = 0; i < listaPrac.size(); i++) {
+             std::string input = listaPrac[i].second.readSlowaKluczowe();
+             std::vector<std::string> slowa;
+             boost::split(slowa, input, boost::is_any_of(";"));
+             for (unsigned int i = 0; i < slowa.size(); i++) {
+                 listaSlow.emplace_back(slowa[i]);
+             }
+         }
+
+         std::sort(listaSlow.begin(), listaSlow.end());
+
+         std::map<std::string, int> duplicates;
+
+         for_each(listaSlow.begin(), listaSlow.end(), [&duplicates](std::string val) { duplicates[val]++; });
+
+         std::vector<std::pair<std::string, int>> pairs;
+
+         for (auto itr = duplicates.begin(); itr != duplicates.end(); ++itr)
+             pairs.push_back(*itr);
+
+         sort(pairs.begin(), pairs.end(), [=](std::pair<std::string, int>& a, std::pair<std::string, int>& b)
+             {
+                 return a.second > b.second;
+             }
+         );
+
+         pairs.resize(10);
+
+         int index = 0;
+
+         for (auto i : pairs) {
+            std::cout << ++index << ". " << i.first << ' ' << i.second << std::endl;
+        }
+        std::cout << "-----------------------------------------------------------------" << std::endl;
      }
 }

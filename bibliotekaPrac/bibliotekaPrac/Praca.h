@@ -111,6 +111,28 @@ public:
         // Funkcja przekazujaca streszczenie kluczowe
         std::string readStreszczenie();
 
+    // Edit member data functions
+
+        void editTypPracy();
+
+        void editTytul();
+
+        void editNazwiskoAutora();
+	
+        void editImionaAutora();
+		
+        void getInicjal(std::string imionaAutora, const char COMA);
+
+		void editRok();
+
+		void editNazwiskoPromotora();
+
+		void editImionaPromotora();
+
+		void editSlowaKluczowe();
+
+		void editStreszczenie();
+
 
     // Misc functions
 

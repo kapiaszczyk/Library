@@ -30,10 +30,7 @@ int main() {
 
     biblioteka.Biblioteka::wczytajPrace(biblioteka.Biblioteka::listaPrac);
     biblioteka.Biblioteka::menu(biblioteka);
-
-
-    //Sleep(36000);
-
+    biblioteka.Biblioteka::zapiszPrace(biblioteka.Biblioteka::listaPrac);
 
     return 0;
    

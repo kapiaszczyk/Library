@@ -1,80 +1,95 @@
 #include "UI_messages.h"
 #include "Praca.h"
 
-void printTypeList(const std::vector<std::string> dozwoloneTypy) {
-    for (unsigned int i = 0; i < dozwoloneTypy.size(); i++) std::cout << dozwoloneTypy[i] << std::endl;
+void coutInputIndicator() {
+    std::cout << ">> ";
 }
 
+void printTypeList(const std::vector<std::string> dozwoloneTypy) {
+    for (unsigned int i = 0; i < dozwoloneTypy.size(); i++) std::cout << ">> " << dozwoloneTypy[i] << std::endl;
+}
+
+void messageFoundInID() {
+    std::cout << ">> Znaleziono w pracach o ID: ";
+}
 
 void editMessageInitial() {
-    std::cout << "Podaj ID pracy, ktora chcesz edytowac" << std::endl;
+    std::cout << ">> Podaj ID pracy, ktora chcesz edytowac\n";
+    coutInputIndicator();
 }
 
 void editMessage() {
-    std::cout << "Ktora wartosc chcesz edytowac?" << std::endl;
-    std::cout << "[1] Typ pracy" << std::endl;
-    std::cout << "[2] Tytul" << std::endl;
-    std::cout << "[3] Nazwisko autora" << std::endl;
-    std::cout << "[4] Imie autora" << std::endl;
-    std::cout << "[5] Rok powstania" << std::endl;
-    std::cout << "[6] Slowo kluczowe" << std::endl;
-    std::cout << "[7] Streszczenie" << std::endl;
+    std::cout << "Ktora wartosc chcesz edytowac?\n";
+    std::cout << "[1] Typ pracy\n";
+    std::cout << "[2] Tytul\n";
+    std::cout << "[3] Nazwisko autora\n";
+    std::cout << "[4] Imie autora\n";
+    std::cout << "[5] Rok powstania\n";
+    std::cout << "[6] Slowo kluczowe\n";
+    std::cout << "[7] Streszczenie\n";
+    std::cout << "[8] Anuluj edycje pracy\n" << std::flush;
+
+    coutInputIndicator();
+
 }
 
 void menuMessage() {
 
-    std::cout << "Wybierz funkcje programu. Aby wyjsc z programu, nacisnij X." << std::endl;
-    std::cout << "[1] Dodawanie pracy" << std::endl;
-    std::cout << "[2] Edycja pracy" << std::endl;
-    std::cout << "[3] Wyswietlanie listy prac w formacie skroconym" << std::endl;
-    std::cout << "[4] Wyswietlanie listy prac w formacie pelnym" << std::endl;
-    std::cout << "[5] Wyszukiwanie pracy" << std::endl;
-    std::cout << "[6] Dodatkowe funkcje" << std::endl;
-    std::cout << "[X] Wyjscie z programu" << std::endl;
+    std::cout << ">> Wybierz funkcje programu. Aby wyjsc z programu, nacisnij 7.\n";
+    std::cout << "[1] Dodawanie pracy\n";
+    std::cout << "[2] Edycja pracy\n";
+    std::cout << "[3] Wyswietlanie listy prac w formacie skroconym\n";
+    std::cout << "[4] Wyswietlanie listy prac w formacie pelnym\n";
+    std::cout << "[5] Wyszukiwanie pracy\n";
+    std::cout << "[6] Dodatkowe funkcje\n";
+    std::cout << "[7] Wyjscie z programu\n" << std::flush;
+    coutInputIndicator();
 
 }
 
 void searchMenuMessage() {
 
-    std::cout << "Na podstawie jakiego kryterium chcesz wyszukac prace?" << std::endl;
-    std::cout << "[1] Nazwisko autora" << std::endl;
-    std::cout << "[2] Nazwisko promotora" << std::endl;
-    std::cout << "[3] Tytul" << std::endl;
-    std::cout << "[4] Slowo kluczowe" << std::endl;
-    std::cout << "[5] Streszczenie" << std::endl;
-    std::cout << "[6] Rok powstania" << std::endl;
-    std::cout << "[X] Wyjscie z wyszukiwania" << std::endl;
+    std::cout << ">> Na podstawie jakiego kryterium chcesz wyszukac prace?\n";
+    std::cout << "[1] Nazwisko autora\n";
+    std::cout << "[2] Nazwisko promotora\n";
+    std::cout << "[3] Tytul\n";
+    std::cout << "[4] Slowo kluczowe\n";
+    std::cout << "[5] Streszczenie\n";
+    std::cout << "[6] Rok powstania\n";
+    std::cout << "[7] Wyjscie z wyszukiwania\n" << std::flush;
+    coutInputIndicator();
 
 }
 
 void subMenuMessage() {
-    std::cout << "Wybierz dodatkowe funkcje programu. Aby wyjsc z submenu, nacisnij X" << std::endl;
-    std::cout << "[1] Wyswietlanie liczby wszystkich prac" << std::endl;
-    std::cout << "[2] Wyswietlanie liczby prac dla poszczegolnych promotorow" << std::endl;
-    std::cout << "[3] Wyswietlanie 10 slow kluczowych" << std::endl;
-    std::cout << "[X] Wyjscie z dodatkowych funkcji" << std::endl;
+    std::cout << ">> Wybierz dodatkowe funkcje programu. Aby wyjsc z submenu, nacisnij 4\n";
+    std::cout << "[1] Wyswietlanie liczby wszystkich prac\n";
+    std::cout << "[2] Wyswietlanie liczby prac dla poszczegolnych promotorow\n";
+    std::cout << "[3] Wyswietlanie 10 slow kluczowych\n";
+    std::cout << "[4] Wyjscie z dodatkowych funkcji\n" << std::flush;
+    coutInputIndicator();
 }
 
 
  void errorLibraryEmpty() {
-     std::cout << "Nie mozna wyswietlic/wczytac zawartosci biblioteki, poniewaz jest ona pusta. Dodaj prace, aby umozliwic wyswietlanie/wczytanie jej zawartosci." << std::endl;
+     std::cout << ">> Nie mozna wyswietlic/wczytac zawartosci biblioteki, poniewaz jest ona pusta. Dodaj prace, aby umozliwic wyswietlanie/wczytanie jej zawartosci.\n";
  }
 
 
 
-//void typPracyMessage(enum Praca::messageFlag flag) {
-//    switch (flag) {
-//    case Praca::messageFlag::initial:
-//        std::cout << "Dodaj typ pracy." << std::endl;
-//        break;
-//    case Praca::messageFlag::error:
-//        std::cout << "Niedozwolony typ pracy." << std::endl;
-//        break;
-//    case Praca::messageFlag::allowedValues:
-//        std::cout << " Dozwolone typy pracy to: " << std::endl;
-//        printTypeList(dozwoloneTypy);
-//        break;
-//    default:
-//        break;
-//    }
-//}
+void typPracyMessage(int x) {
+    switch (x) {
+    case 0:
+        std::cout << ">> Dodaj typ pracy:\n" << std::flush;
+        break;
+    case 1:
+        std::cout << ">> Niedozwolony typ pracy.\n";
+        break;
+    case 2:
+        std::cout << ">> Dozwolone typy pracy to:\n" << std::flush;
+        printTypeList(dozwoloneTypy);
+        break;
+    default:
+        break;
+    }
+}

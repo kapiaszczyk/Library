@@ -12,6 +12,7 @@
 #include <filesystem>
 #include <map>
 #include <boost/algorithm/string.hpp>
+#include <limits>
 
 extern const std::string lineId[];
 extern const int MINIMALNY_ROK;
@@ -58,7 +59,7 @@ class Biblioteka {
     void zapiszPrace(std::vector<std::pair<int, Praca>>&);
 
     // Pozwala edytowac wybrana prace
-    void edytujPrace(std::vector<std::pair<int, Praca>>);
+    void edytujPrace(std::vector<std::pair<int, Praca>>&);
 
     // Wyszukuje 
     void szukaj();
