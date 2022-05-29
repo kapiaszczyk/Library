@@ -147,9 +147,9 @@
     </ClCompile>
     <ClCompile Include="bibliotekaPrac.cpp" />
     <ClCompile Include="Praca.cpp" />
+    <ClCompile Include="UI_messages.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="additionalFunctions.h" />
     <ClInclude Include="Biblioteka.h" />
     <ClInclude Include="Praca.h" />
     <ClInclude Include="UI_messages.h" />

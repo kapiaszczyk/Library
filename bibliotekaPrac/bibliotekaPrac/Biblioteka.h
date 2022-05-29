@@ -1,16 +1,18 @@
-#include <string>
-#include <iostream>
+#define NOMINMAX
+
+#include <limits>
 #include <algorithm>
-#include <fstream>
 #include <vector>
-#include <array>
-#include <stdexcept>
-#include <cstring>  // strtok, etc
-#include <sstream>
-#include <utility>
+#include <map>
+#include <string>
 
+#include <iostream>
+#include <fstream>
 
-extern const std::string lineId[];
+#include <filesystem>                                   // Checks if the source file is empty
+#include <boost/algorithm/string.hpp>                   // To lowercase, splitting words to a vector
+
+extern const std::string IDENTYFIKATORY_DANYCH[];
 extern const int MINIMALNY_ROK;
 extern const int ILE_WARTOSCI_PRACA;
 
@@ -18,40 +20,53 @@ class Praca;
 
 class Biblioteka {
 
-public:
+    public:
 
-    Biblioteka() {}
+    Biblioteka() {
+        bool startEmpty = false;
+    }
 
     std::vector<std::pair<int, Praca>> listaPrac;
 
-    int getLastId(std::vector<std::pair<int, Praca>>& listaPrac);
+    // Przekazuje ostatnio u¿yte ID
+    int getLastId(std::vector<std::pair<int, Praca>>&);
+
+    // Wyswietla liczbe prac przechowywana w danym momencie w bibliotece
+    void wyswietlLiczbePrac(std::vector<std::pair<int, Praca>>);
+
+    // Funkcja umozliwiajace edytowanie wielu elementu pracy
+    void editAgain(bool&);
+
+    // Sprawdza, czy plik wejsciowy jest pusty
+    bool isLibraryEmpty(Biblioteka biblioteka);
 
     // Inicjalizuje menu biblioteki
     void menu(Biblioteka & biblioteka);
 
     void wypiszPrace(Praca & praca);
 
+    // Funkcja sprawdza, jaka wartosc zawiera dana linia w pliku
     int checkValue(std::string line, const std::string id[]);
 
     // Wczytuje wszystkie prace
-    void wczytajPrace(std::vector<std::pair<int, Praca>>& listaPrac);
+    void wczytajPrace(std::vector<std::pair<int, Praca>>&);
 
     // Wyswietla skrocona liste prac
-    void wyswSkrocone();
+    void wyswSkrocone(std::vector<std::pair<int, Praca>>);
 
     // Wyswietla pelna liste prac
-    void wyswPelne(std::vector<std::pair<int, Praca>>& listaPrac, int vectorSize);
+    void wyswPelne(std::vector<std::pair<int, Praca>>);
 
     // Funkcja pozwalajace dodac nowa prace
-    void dodajPrace( );
+    void dodajPrace();
 
     // Funkcja zapisujaca prace w pliku i w bibliotece
-    void zapiszPrace(std::vector<std::pair<int, Praca>>& listaPrac);
+    void zapiszPrace(std::vector<std::pair<int, Praca>>&);
 
     // Pozwala edytowac wybrana prace
-    void edytujPrace(std::vector<std::pair<int, Praca>> listaPrac);
+    void edytujPrace(std::vector<std::pair<int, Praca>>&);
 
-    // Wyszukuje 
+    // Wyszukuje ID prac wg wybranego kryterium
     void szukaj();
 
     // Wyswietla liczbe prac w bibliotece

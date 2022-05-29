@@ -24,12 +24,12 @@
     <ClCompile Include="Biblioteka.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="UI_messages.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Praca.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="additionalFunctions.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="UI_messages.h">

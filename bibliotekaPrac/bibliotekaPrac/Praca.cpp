@@ -1,259 +1,602 @@
 #include "Praca.h"
+#include "UI_messages.h"
 
-// #include "additionalFunctions.h"
+// Get member data functions
 
-#include <vector>
-#include <string>
-#include <iostream>
-#include <fstream>
-#include <sstream>
-#include <limits>
-#include <boost/algorithm/string/case_conv.hpp>
+	void  Praca::clearCin() {
+		std::cin.clear();
+		std::cin.ignore();
+	}
 
+	void Praca::addIdPracy(int ID = 0, bool creatingNew = false) {
+		if (!creatingNew) Praca::idPraca = ID;
+		else Praca::idPraca = ID + 1;
+	}
+	
+	void Praca::addTypPracy(std::string externaValue = "") {
 
- void clearCin() {
-    std::cin.clear();
-    std::cin.ignore();
-}
+		if (externaValue != "") {
+			Praca::typPracy = externaValue;
+		}
 
- void Praca::printTypeList(const std::vector<std::string> dozwoloneTypy) {
-    for (unsigned int i = 0; i < dozwoloneTypy.size(); i++) std::cout << dozwoloneTypy[i] << std::endl;
-}
+		else {
 
-// Sprawdza, czy rok spe³nia wymagania
- bool validateYear(int input) {
+			std::string temp = "";
 
-    if (input == 0 || input < MINIMALNY_ROK) return false;
-    return true;
+			while (!Praca::validateType(temp, DOZWOLONE_TYPY_PRAC)) {
 
-}
+				std::cout << ">> Dodaj typ pracy\n";
+				coutInputIndicator();
 
- bool Praca::validateType(std::string input, const std::vector<std::string> dozwoloneTypy) {
-    return std::find(dozwoloneTypy.begin(), dozwoloneTypy.end(), input) != dozwoloneTypy.end();
-}
+				std::cin >> temp;
+				std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 
- void Praca::getInicjal(std::string imionaAutora, std::string& inicjalyAutora, const char COMA) {
+				boost::algorithm::to_lower(temp);
 
-    std::vector<std::string> imiona{};
+				if (!Praca::validateType(temp, DOZWOLONE_TYPY_PRAC)) {
 
-    std::stringstream sstream(imionaAutora);
-    std::string word;
-    std::string tempString;
+					std::cout << ">> Nieprawidlowy typ pracy.\n";
+					std::cout << ">> Dozwolone typy pracy to:\n" << std::flush;
+					printTypeList(DOZWOLONE_TYPY_PRAC);
 
-    while (std::getline(sstream, word, COMA)) {
-        imiona.push_back(word);
-    }
+					temp = "";
 
-    for (int i = 0; i < imiona.size(); i++) {
-        std::cout << imiona[i] << " " << imiona[i].substr(0, 1) << std::endl;
-        tempString += imiona[i].substr(0, 1) + ". ";
-    }
+				}
 
-    inicjalyAutora = tempString;
+			}
 
-}
+			Praca::typPracy = temp;
+		}
+	}
 
- std::string Praca::addStreszczenie() {
+	void Praca::addTytul(std::string externaValue = "") {
+		if (externaValue != "") {
+			Praca::tytul = externaValue;
+		}
 
-    std::string temp = "";
+		else {
 
-    std::cout << "Dodaj streszczenie" << std::endl;
+			std::string temp = "";
 
-    std::getline(std::cin, temp);
+			while (temp == "") {
 
-    if (temp != "" && temp.size() > 1000) {
+				std::cout << ">> Dodaj tytul pracy" << std::endl;
+				coutInputIndicator();
 
-        std::cout << "Maksymalna ilosc znakow to 1000!" << std::endl;
+				std::getline(std::cin, temp);
 
-        while (temp != "") {
+				if (temp == "") {
 
-            std::getline(std::cin, temp);
+					std::cout << ">> Tytul pracy nie moze byc pusty!" << std::endl;
+					temp = "";
 
-        }
-    }
+					Praca::clearCin();
+				}
 
-    return temp;
+			}
 
-}
 
- std::string Praca::addSlowaKluczowe() {
-    std::string temp = "";
+			Praca::tytul = temp;
+		}
+	}
 
-    std::cout << "Dodaj slowa kluczowe oddzielone srednikami" << std::endl;
+	void Praca::addNazwiskoAutora(std::string externaValue = "") {
 
-    std::getline(std::cin, temp);
+		if (externaValue != "") {
+			Praca::nazwiskoAutora = externaValue;
+		}
 
-    return temp;
-}
+		else {
+			std::string temp = "";
 
- std::string Praca::addImionaPromotora() {
+			while (temp == "") {
 
-    std::string temp = "";
+				std::cout << ">> Dodaj nazwisko autora " << std::endl;
+				coutInputIndicator();
 
-    while (temp == "") {
+				std::cin >> temp;
 
-        std::cout << "Dodaj imiona promotora oddzielone przecinkami" << std::endl;
+				if (temp == "") {
+					std::cout << "Nazwisko autora nie moze byc puste!" << std::endl;
+					temp = "";
 
-        std::getline(std::cin, temp);
+					Praca::clearCin();
+				}
 
-        if (temp == "") {
+			}
 
-            std::cout << "Imiona promotora nie moga byc puste!" << std::endl;
+			Praca::nazwiskoAutora = temp;
+		}
+	}
 
-            temp = "";
+	void Praca::addImionaAutora(std::string externaValue = "") {
 
-            clearCin();
-        }
+		if (externaValue != "") {
+			Praca::imionaAutora = externaValue;
+		}
 
+		else {
+			std::string temp = "";
 
-    }
-    return temp;
-}
+			while (temp == "") {
 
- std::string Praca::addNazwiskoPromotora() {
+				std::cout << ">> Dodaj imiona autora oddzielone przecinkami" << std::endl;
+				coutInputIndicator();
 
-    std::string temp = "";
+				std::cin.ignore();
+				std::getline(std::cin, temp);
 
-    while (temp == "") {
+				if (temp == "") {
+					std::cout << "Imiona autora nie moga byc puste!" << std::endl;
+					temp = "";
 
-        std::cout << "Dodaj nazwisko promotora" << std::endl;
+					Praca::clearCin();
+				}
 
-        std::getline(std::cin, temp);
+			}
 
-        if (temp == "") {
+			getInicjal(temp,COMA,"");
 
-            std::cout << "Nazwisko promotora nie moze byc puste!" << std::endl;
-            temp = "";
+			Praca::imionaAutora = temp;
+		}
+	}
 
-            clearCin();
-        }
+	void Praca::getInicjal(std::string imionaAutora, const char COMA, std::string externaValue = "") {
 
-    }
+		if (externaValue != "") {
+			Praca::inicjalyAutora = externaValue;
+		}
 
-    return temp;
+		else {
+			std::vector<std::string> imiona{};
 
-}
+			boost::algorithm::erase_all(imionaAutora, " ");
 
- int Praca::addRok() {
+			std::stringstream sstream(imionaAutora);
+			std::string word;
+			std::string tempString;
 
-    int temp = 0;
+			while (std::getline(sstream, word, COMA)) {
+				imiona.push_back(word);
+			}
 
-    while (!validateYear(temp)) {
+			for (unsigned int i = 0; i < imiona.size(); i++) {
+				tempString += imiona[i].substr(0, 1) + ". ";
+			}
 
-        std::cout << "Dodaj rok" << std::endl;
+			Praca::inicjalyAutora = tempString;
+		}
+	}
 
-        std::cin >> temp;
-        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+	void Praca::addRok(int externaValue = -1) {
 
-        if (!validateYear(temp)) {
+		if (externaValue != -1) {
+			Praca::rok = externaValue;
+		}
 
-            std::cout << "Minimalny rok to " << MINIMALNY_ROK << std::endl;
-            temp = 0;
+		else {
+			int temp = 0;
 
-            clearCin();
+			while (!validateYear(temp)) {
 
-        }
+				std::cout << ">> Dodaj rok" << std::endl;
+				coutInputIndicator();
+				
+				std::cin >> temp;
 
+				if (!Praca::validateYear(temp)) {
 
-    }
+					std::cout << ">> Minimalny rok to " << MINIMALNY_ROK << std::endl;
+					temp = 0;
 
-    return temp;
-}
+					Praca::clearCin();
 
- std::string Praca::addImionaAutora() {
+				}
 
-    std::string temp = "";
+			}
 
-    while (temp == "") {
+			Praca::rok = temp;
+		}
+	}
 
-        std::cout << "Dodaj imiona autora oddzielone przecinkami" << std::endl;
+	void Praca::addNazwiskoPromotora(std::string externaValue = "") {
 
-        std::getline(std::cin, temp);
+		if (externaValue != "") {
+			Praca::nazwiskoPromotora = externaValue;
+		}
 
-        if (temp == "") {
-            std::cout << "Imiona autora nie moga byc puste!" << std::endl;
-            temp = "";
+		else {
+			std::string temp = "";
 
-            clearCin();
-        }
+			while (temp == "") {
 
-    }
+				std::cout << ">> Dodaj nazwisko promotora" << std::endl;
+				coutInputIndicator();
 
-    getInicjal(temp, Praca::inicjalyAutora, COMA);
+				std::cin.ignore();
+				std::getline(std::cin, temp);
 
-    return temp;
-}
+				if (temp == "") {
 
- std::string Praca::addNazwiskoAutora() {
+					std::cout << ">> Nazwisko promotora nie moze byc puste!" << std::endl;
+					temp = "";
 
-    std::string temp = "";
+					Praca::clearCin();
+				}
 
-    while (temp == "") {
+			}
 
-        std::cout << "Dodaj nazwisko autora " << std::endl;
+			Praca::nazwiskoPromotora = temp;
+		}
+	}
 
-        std::cin >> temp;
-        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+	void Praca::addImionaPromotora(std::string externaValue = "") {
 
-        if (temp == "") {
-            std::cout << "Nazwisko autora nie moze byc puste!" << std::endl;
-            temp = "";
+		if (externaValue != "") {
+			Praca::imionaPromotora = externaValue;
+		}
 
-            clearCin();
-        }
+		else {
+			std::string temp = "";
 
-    }
+			while (temp == "") {
 
-    return temp;
-}
+				std::cout << ">> Dodaj imie promotora" << std::endl;
+				coutInputIndicator();
 
- std::string Praca::addTytul() {
+				std::getline(std::cin, temp);
 
-    std::string temp = "";
+				if (temp == "") {
 
-    while (temp == "") {
+					std::cout << ">> Imie promotora nie moga byc puste!" << std::endl;
 
-        std::cout << "Dodaj tytul pracy" << std::endl;
+					temp = "";
 
-        std::getline(std::cin, temp);
+					Praca::clearCin();
+				}
+			}
+			Praca::imionaPromotora = temp;
+		}
+	}
 
+	void Praca::addSlowaKluczowe(bool addingNew, std::string externaValue = "") {
 
-        if (temp == "") {
+		if (!addingNew) {
+			Praca::slowaKluczowe = externaValue;
+		}
 
-            std::cout << "Tytul pracy nie moze byc pusty!" << std::endl;
-            temp = "";
+		else {
+			std::string temp = "";
 
-            clearCin();
-        }
+			std::cout << ">> Dodaj slowa kluczowe oddzielone srednikami"
+				<< std::endl;
+			coutInputIndicator();
 
-    }
+			std::getline(std::cin, temp);
 
+			boost::algorithm::to_lower(temp);
+			boost::algorithm::erase_all(temp, " ");
 
-    return temp;
-}
+			Praca::slowaKluczowe = temp;
+		}
+	}
 
- std::string Praca::addTypPracy() {
+	void Praca::addStreszczenie(bool addingNew, std::string externaValue = "") {
 
-    std::cout << "Dodaj typ pracy" << std::endl;
-    std::string temp = "";
+		if (!addingNew) {
+			Praca::streszczenie = externaValue;
+		}
 
-    while (!Praca::validateType(temp, dozwoloneTypy)) {
+		else {
 
-        std::cin >> temp;
-        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+			std::string temp;
+			std::cout << ">> Dodaj streszczenie" << std::endl;
+			coutInputIndicator();
 
-        boost::algorithm::to_lower(temp);
+			std::getline(std::cin, temp);
 
-        if (!Praca::validateType(temp, dozwoloneTypy)) {
+			if (temp != "" && temp.size() > 1000) {
 
-            std::cout << "Nieozwolony typ pracy. Podaj jeden z nastepujacych typow pracy" <<std::endl;
+				std::cout << "Maksymalna ilosc znakow to 1000!" << std::endl;
 
-            Praca::printTypeList(dozwoloneTypy);
-            clearCin();
+				while (temp != "") {
 
-        }
+					std::getline(std::cin, temp);
 
-    }
+				}
+			}
 
-    return temp;
-}
+			Praca::streszczenie = temp;
+		}
+	}
+
+// Read member data functions
+
+	int Praca::readIdPracy() {return Praca::idPraca;}
+
+	std::string Praca::readTypPracy() { return Praca::typPracy; }
+
+	std::string Praca::readTytul() { return Praca::tytul; }
+
+	std::string Praca::readNazwiskoAutora() { return Praca::nazwiskoAutora; }
+
+	std::string Praca::readImionaAutora() { return Praca::imionaAutora; }
+
+	std::string Praca::readInicjal() { return Praca::inicjalyAutora; }
+
+	int Praca::readRok() { return Praca::rok; }
+
+	std::string Praca::readNazwiskoPromotora() { return Praca::nazwiskoPromotora; }
+
+	std::string Praca::readImionaPromotora() { return Praca::imionaPromotora; }
+
+	std::string Praca::readSlowaKluczowe() { return Praca::slowaKluczowe; }
+
+	std::string Praca::readStreszczenie() { return Praca::streszczenie; }
+
+// Edit member data functions
+
+	void Praca::editTypPracy() {
+
+			std::string temp = "";
+
+			while (!Praca::validateType(temp, DOZWOLONE_TYPY_PRAC)) {
+
+				std::cout << ">> Dodaj typ pracy\n";
+				coutInputIndicator();
+
+				std::cin >> temp;
+				std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+
+				boost::algorithm::to_lower(temp);
+
+				if (!Praca::validateType(temp, DOZWOLONE_TYPY_PRAC)) {
+
+					std::cout << ">> Nieprawidlowy typ pracy.\n";
+					std::cout << ">> Dozwolone typy pracy to:\n" << std::flush;
+					printTypeList(DOZWOLONE_TYPY_PRAC);
+
+					temp = "";
+
+				}
+
+			}
+
+			Praca::typPracy = temp;
+		
+	}
+
+	void Praca::editTytul() {
+
+			std::string temp;
+
+			do {
+
+				std::cout << ">> Dodaj tytul pracy" << std::endl;
+				coutInputIndicator();
+
+				std::cin.ignore();
+				std::getline(std::cin, temp);
+
+				if (temp == "") {
+
+					std::cout << "Tytul pracy nie moze byc pusty!" << std::endl;
+					temp = "";
+				}
+			} while (temp == "");
+
+
+			Praca::tytul = temp;
+		
+	}
+
+	void Praca::editNazwiskoAutora() {
+
+
+			std::string temp = "";
+
+			while (temp == "") {
+
+				std::cout << ">> Dodaj nazwisko autora " << std::endl;
+				coutInputIndicator();
+				std::cin.ignore();
+				std::cin >> temp;
+
+				if (temp == "") {
+					std::cout << "Nazwisko autora nie moze byc puste!" << std::endl;
+					temp = "";
+
+					Praca::clearCin();
+				}
+
+			}
+
+			Praca::nazwiskoAutora = temp;
+		
+	}
+
+	void Praca::editImionaAutora() {
+
+
+			std::string temp = "";
+
+			while (temp == "") {
+
+				std::cout << ">> Dodaj imiona autora oddzielone przecinkami" << std::endl;
+				coutInputIndicator();
+
+				std::cin.ignore();
+				std::getline(std::cin, temp);
+
+				if (temp == "") {
+					std::cout << "Imiona autora nie moga byc puste!" << std::endl;
+					temp = "";
+
+					Praca::clearCin();
+				}
+
+			}
+
+			getInicjal(temp, COMA, "");
+
+			Praca::imionaAutora = temp;
+		
+	}
+
+	void Praca::editRok() {
+
+
+			int temp = 0;
+
+			while (!validateYear(temp)) {
+
+				std::cout << ">> Dodaj rok" << std::endl;
+				coutInputIndicator();
+
+				std::cin.ignore();
+				std::cin >> temp;
+
+				if (!Praca::validateYear(temp)) {
+
+					std::cout << ">> Minimalny rok to " << MINIMALNY_ROK << std::endl;
+					temp = 0;
+
+					Praca::clearCin();
+
+				}
+
+			}
+
+			Praca::rok = temp;
+		
+	}
+
+	void Praca::editNazwiskoPromotora() {
+
+
+			std::string temp = "";
+
+			while (temp == "") {
+
+				std::cout << ">> Dodaj nazwisko promotora" << std::endl;
+				coutInputIndicator();
+
+				std::cin.ignore();
+				std::getline(std::cin, temp);
+
+				if (temp == "") {
+
+					std::cout << "Nazwisko promotora nie moze byc puste!" << std::endl;
+					temp = "";
+
+					Praca::clearCin();
+				}
+
+			}
+
+			Praca::nazwiskoPromotora = temp;
+		
+	}
+
+	void Praca::editImionaPromotora() {
+
+
+			std::string temp = "";
+
+			while (temp == "") {
+
+				std::cout << ">> Dodaj imie promotora" << std::endl;
+				coutInputIndicator();
+
+				std::getline(std::cin, temp);
+
+				if (temp == "") {
+
+					std::cout << "Imie promotora nie moga byc puste!" << std::endl;
+
+					temp = "";
+
+					Praca::clearCin();
+				}
+
+
+			}
+
+			Praca::imionaPromotora = temp;
+
+			Praca::getInicjal(Praca::imionaAutora, COMA, "");
+		
+	}
+
+	void Praca::editSlowaKluczowe() {
+
+
+			std::string temp = "";
+
+			std::cout << ">> Dodaj slowa kluczowe oddzielone srednikami"<< std::endl;
+			coutInputIndicator();
+			std::cin.ignore();
+			std::getline(std::cin, temp);
+
+			boost::algorithm::to_lower(temp);
+			temp = boost::regex_replace(temp, boost::regex("[' ']{2,}"), " ");
+
+			Praca::slowaKluczowe = temp;
+		
+	}
+
+	void Praca::editStreszczenie() {
+
+			std::string temp;
+			std::cout << ">> Dodaj streszczenie" << std::endl;
+			coutInputIndicator();
+			std::cin.ignore();
+			std::getline(std::cin, temp);
+
+			if (temp != "" && temp.size() > 1000) {
+
+				std::cout << "Maksymalna ilosc znakow to 1000!" << std::endl;
+
+				while (temp != "") {
+
+					std::getline(std::cin, temp);
+
+				}
+			}
+
+			Praca::streszczenie = temp;
+	}
+
+
+
+// MISC FUNCTIONS
+
+	void Praca::printPraca(int id) {
+
+		std::cout 
+			<< "ID: " << Praca::readIdPracy() << std::endl
+			<< "TP: " << Praca::readTypPracy() << std::endl
+			<< "TT: " << Praca::readTytul() << std::endl
+			<< "AN: " << Praca::readNazwiskoAutora() << std::endl
+			<< "AI: " << Praca::readImionaAutora() << std::endl
+			<< "II: " << Praca::readInicjal() << std::endl
+			<< "YY: " << Praca::readRok() << std::endl
+			<< "PN: " << Praca::readNazwiskoPromotora() << std::endl
+			<< "PI: " << Praca::readImionaPromotora() << std::endl
+			<< "SK: " << Praca::readSlowaKluczowe() << std::endl
+			<< "ST: " << Praca::readStreszczenie() << std::endl;
+	}
+
+	// Sprawdza, czy podany rok pracy spelnia wymagania
+	bool Praca::validateYear(int input) {
+		if (input == 0 || input < MINIMALNY_ROK) return false;
+		return true;
+	}
+
+	// Sprawdza, czy typ pracy jest prawidlowy
+	bool Praca::validateType(std::string input, const std::vector<std::string> dozwoloneTypy) {
+		return std::find(dozwoloneTypy.begin(), dozwoloneTypy.end(), input) != dozwoloneTypy.end();
+	}
+
+
+
