@@ -3,19 +3,16 @@
 
 // Get member data functions
 
-enum class messageFlag {};
-
-void  Praca::clearCin() {
-	std::cin.clear();
-	std::cin.ignore();
-}
+	void  Praca::clearCin() {
+		std::cin.clear();
+		std::cin.ignore();
+	}
 
 	void Praca::addIdPracy(int ID = 0, bool creatingNew = false) {
 		if (!creatingNew) Praca::idPraca = ID;
 		else Praca::idPraca = ID + 1;
 	}
 	
-
 	void Praca::addTypPracy(std::string externaValue = "") {
 
 		if (externaValue != "") {
@@ -24,24 +21,25 @@ void  Praca::clearCin() {
 
 		else {
 
-			typPracyMessage(0);
-			coutInputIndicator();
-
 			std::string temp = "";
 
-			while (!Praca::validateType(temp, dozwoloneTypy)) {
+			while (!Praca::validateType(temp, DOZWOLONE_TYPY_PRAC)) {
+
+				std::cout << ">> Dodaj typ pracy\n";
+				coutInputIndicator();
 
 				std::cin >> temp;
 				std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 
 				boost::algorithm::to_lower(temp);
 
-				if (!Praca::validateType(temp, dozwoloneTypy)) {
+				if (!Praca::validateType(temp, DOZWOLONE_TYPY_PRAC)) {
 
-					typPracyMessage(2);
-					typPracyMessage(1);
+					std::cout << ">> Nieprawidlowy typ pracy.\n";
+					std::cout << ">> Dozwolone typy pracy to:\n" << std::flush;
+					printTypeList(DOZWOLONE_TYPY_PRAC);
 
-					Praca::clearCin();
+					temp = "";
 
 				}
 
@@ -69,7 +67,7 @@ void  Praca::clearCin() {
 
 				if (temp == "") {
 
-					std::cout << "Tytul pracy nie moze byc pusty!" << std::endl;
+					std::cout << ">> Tytul pracy nie moze byc pusty!" << std::endl;
 					temp = "";
 
 					Praca::clearCin();
@@ -220,7 +218,7 @@ void  Praca::clearCin() {
 
 				if (temp == "") {
 
-					std::cout << "Nazwisko promotora nie moze byc puste!" << std::endl;
+					std::cout << ">> Nazwisko promotora nie moze byc puste!" << std::endl;
 					temp = "";
 
 					Praca::clearCin();
@@ -250,22 +248,20 @@ void  Praca::clearCin() {
 
 				if (temp == "") {
 
-					std::cout << "Imie promotora nie moga byc puste!" << std::endl;
+					std::cout << ">> Imie promotora nie moga byc puste!" << std::endl;
 
 					temp = "";
 
 					Praca::clearCin();
 				}
-
-
 			}
 			Praca::imionaPromotora = temp;
 		}
 	}
 
-	void Praca::addSlowaKluczowe(std::string externaValue = "") {
+	void Praca::addSlowaKluczowe(bool addingNew, std::string externaValue = "") {
 
-		if (externaValue != "") {
+		if (!addingNew) {
 			Praca::slowaKluczowe = externaValue;
 		}
 
@@ -279,6 +275,7 @@ void  Praca::clearCin() {
 			std::getline(std::cin, temp);
 
 			boost::algorithm::to_lower(temp);
+			boost::algorithm::erase_all(temp, " ");
 
 			Praca::slowaKluczowe = temp;
 		}
@@ -341,28 +338,32 @@ void  Praca::clearCin() {
 
 	void Praca::editTypPracy() {
 
-		std::cout << "Podaj nowy typ pracy" << std::endl;
-		coutInputIndicator();
-		std::string temp;
+			std::string temp = "";
 
-		do {
+			while (!Praca::validateType(temp, DOZWOLONE_TYPY_PRAC)) {
 
-			std::cin >> temp;
+				std::cout << ">> Dodaj typ pracy\n";
+				coutInputIndicator();
 
-			boost::algorithm::to_lower(temp);
+				std::cin >> temp;
+				std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 
-			if (!Praca::validateType(temp, dozwoloneTypy)) {
+				boost::algorithm::to_lower(temp);
 
-				std::cout << "Nieprawidlowy typ pracy" << std::endl;
+				if (!Praca::validateType(temp, DOZWOLONE_TYPY_PRAC)) {
 
-				Praca::clearCin();
+					std::cout << ">> Nieprawidlowy typ pracy.\n";
+					std::cout << ">> Dozwolone typy pracy to:\n" << std::flush;
+					printTypeList(DOZWOLONE_TYPY_PRAC);
+
+					temp = "";
+
+				}
 
 			}
 
-		} while (!Praca::validateType(temp, dozwoloneTypy));
-
-		Praca::typPracy = temp;
-
+			Praca::typPracy = temp;
+		
 	}
 
 	void Praca::editTytul() {
@@ -381,7 +382,6 @@ void  Praca::clearCin() {
 
 					std::cout << "Tytul pracy nie moze byc pusty!" << std::endl;
 					temp = "";
-					Praca::clearCin();
 				}
 			} while (temp == "");
 
@@ -533,13 +533,13 @@ void  Praca::clearCin() {
 
 			std::string temp = "";
 
-			std::cout << ">> Dodaj slowa kluczowe oddzielone srednikami"
-				<< std::endl;
+			std::cout << ">> Dodaj slowa kluczowe oddzielone srednikami"<< std::endl;
 			coutInputIndicator();
 			std::cin.ignore();
 			std::getline(std::cin, temp);
 
 			boost::algorithm::to_lower(temp);
+			temp = boost::regex_replace(temp, boost::regex("[' ']{2,}"), " ");
 
 			Praca::slowaKluczowe = temp;
 		
@@ -587,27 +587,16 @@ void  Praca::clearCin() {
 			<< "ST: " << Praca::readStreszczenie() << std::endl;
 	}
 
+	// Sprawdza, czy podany rok pracy spelnia wymagania
 	bool Praca::validateYear(int input) {
-
 		if (input == 0 || input < MINIMALNY_ROK) return false;
 		return true;
-
 	}
 
+	// Sprawdza, czy typ pracy jest prawidlowy
 	bool Praca::validateType(std::string input, const std::vector<std::string> dozwoloneTypy) {
 		return std::find(dozwoloneTypy.begin(), dozwoloneTypy.end(), input) != dozwoloneTypy.end();
 	}
 
-	std::string Praca::printSelected(int choice) {
-
-		switch (choice) {
-		case (0):
-			return std::to_string(Praca::idPraca);
-			break;
-		default:
-			return "NaN";
-			break;
-		}
-	}
 
 

@@ -20,6 +20,7 @@ void editMessageInitial() {
 
 void editMessage() {
     std::cout << ">> Ktora wartosc chcesz edytowac?\n";
+    separatorLine();
     std::cout << "[1] Typ pracy\n";
     std::cout << "[2] Tytul\n";
     std::cout << "[3] Nazwisko autora\n";
@@ -85,9 +86,13 @@ void typPracyMessage(int x) {
         break;
     case 2:
         std::cout << ">> Dozwolone typy pracy to:\n" << std::flush;
-        printTypeList(dozwoloneTypy);
+        printTypeList(DOZWOLONE_TYPY_PRAC);
         break;
     default:
         break;
     }
+}
+
+void separatorLine() {
+    std::cout << "------------------------------\n";
 }

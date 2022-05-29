@@ -2,19 +2,20 @@
 #ifndef PRACA_HPP_SEEN
 #define PRACA_HPP_SEEN
 
+#include <limits>
 #include <vector>
 #include <string>
 #include <iostream>
 #include <fstream>
 #include <sstream>
-#include <limits>
 #include <boost/algorithm/string.hpp>
+#include <boost/regex.hpp>                      // deleting duplicate spaces
 
 extern const char COMA;
 extern const char SEMICOLON;
 extern const int MINIMALNY_ROK;
 extern const int ILE_WARTOSCI_PRACA;
-extern const std::vector<std::string> dozwoloneTypy;
+extern const std::vector<std::string> DOZWOLONE_TYPY_PRAC;
 
 class Praca {
 
@@ -34,10 +35,6 @@ private:
     std::string streszczenie;
 
 public:
-
-    //enum class messageFlag {
-    //    initial, error, allowedValues
-    //};
 
     Praca() {}
 
@@ -71,7 +68,7 @@ public:
         void addImionaPromotora(std::string externaValue);
 
         // Funkcja przypisujaca slowa kluczowe
-        void addSlowaKluczowe(std::string externaValue);
+        void addSlowaKluczowe(bool, std::string externaValue);
 
         // Funkcja przypisujaca streszczenie
         void addStreszczenie(bool addingNew, std::string externaValue);
@@ -113,6 +110,7 @@ public:
 
     // Edit member data functions
 
+        // Edytowanie typu pracy
         void editTypPracy();
 
         void editTytul();
@@ -147,9 +145,6 @@ public:
 
         // Funkcja resetuje strumien wejscia
         void clearCin();
-
-        // Funkcja drukujaca dane Pracy
-        std::string printSelected(int choice);
 
 };
 

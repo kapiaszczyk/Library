@@ -5,11 +5,12 @@
 #include <iostream>
 #include <vector>
 #include <string>
+#include <regex>
 
 class Praca;
 //extern enum class Praca::messageFlag flag;
 
-extern const std::vector<std::string> dozwoloneTypy;
+extern const std::vector<std::string> DOZWOLONE_TYPY_PRAC;
 
 extern void printTypeList(const std::vector<std::string>);
 
@@ -30,5 +31,7 @@ extern void messageFoundInID();
 extern void typPracyMessage(int);
 
 extern void coutInputIndicator();
+
+extern inline void separatorLine();
 
 #endif
